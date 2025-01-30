@@ -1,0 +1,7 @@
+FROM mysql:latest
+
+# Configuración de variables de entorno
+ENV MYSQL_ROOT_PASSWORD=docker2
+ENV MYSQL_DATABASE=Interfaces
+ENV MYSQL_USER=flavio
+ENV MYSQL_PASSWORD=docker2

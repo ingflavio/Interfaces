@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="ventanaAdm.css">
+    <title>Administrador</title>
+  </head>
+  <body>
+    <div class="menu">
+      <h2 class="tituloMenu">Menú</h2>
+      <div class="divBotonesMenu">
+        <button class="btnsMenu" id="btnConfiguracion">Configuración</button>
+        <button class="btnsMenu" id="btnPerfil">Perfil</button>
+      </div>
+    </div>
+    <div class="mostrar">
+      <div class="form-table">
+        <form action="" method="post" id="formulario">
+          <fieldset class="seccionesForm">
+            <label class="titulos">Datos Personales</label>
+            <input type="text" name="inputNombre" id="inputNombre" class="inputs" placeholder="Ingrese Nombre">
+            <input type="text" name="inputApellido" id="inputApellido" class="inputs" placeholder="Ingrese Apellido">
+            <input type="email" name="inputEmail" id="inputEmail" class="inputs" placeholder="Ingrese Email">
+            <input type="text" name="inputProfesion" id="inputProfesion" class="inputs" placeholder="Ingrese Profesion">
+            <input type="text" name="inputSitioWeb" id="inputSitioWeb" class="inputs" placeholder="Ingrese Sitio Web">
+            <div class="divTlf">
+              <label class="labels">Telefono</label>
+              <div class="divNroTlf">
+                <select name="tipoTlf" id="tipoTlf">
+                  <option value="412">0412</option>
+                  <option value="414">0414</option>
+                  <option value="416">0416</option>
+                  <option value="424">0424</option>
+                  <option value="424">0426</option>
+                </select>
+                <input type="tel" name="inputTlf" id="inputTlf" class="inputs">
+              </div>
+            </div>
+            <label for="" class="labels">Perfil</label>
+            <textarea name="areaPerfil" id="areaPerfil" placeholder="Describa un resumen de su perfil Profesional" rows="8" cols="50"></textarea>
+          </fieldset>
+          <fieldset class="seccionesForm idiomasSeccion">
+            <label for="" class="titulos">Manejo de Idiomas</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Español" class="checkbox"> Español</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Ingles" class="checkbox"> Ingles</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Portugués" class="checkbox"> Portugués</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Alemán" class="checkbox"> Alemán</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Italiano" class="checkbox"> Italiano</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Francés" class="checkbox"> Francés</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Ruso" class="checkbox"> Ruso</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Chino" class="checkbox"> Chino</label>
+            <label class="labelIdiomas"><input type="checkbox" value="Japones" class="checkbox"> Japones</label>
+            <label class="labelIdiomas"><input type="checkbox" class="checkbox" value="Otro"/> Otro <input class="inputs" type="text" placeholder="Ingrese el Idioma"/></label>
+            </select>
+          </fieldset>
+          <fieldset class="seccionesForm">
+            <label for="" class="titulos">Nivel de Habilidades</label>
+            <section class="seccionRango">
+              <label for="" class="labelHabilidades">Liderazgo</label><input type="range" name="rangeLiderazgo" id="rangeLiderazgo" min="0" max="5" value="0" step="1">
+            </section>
+            <section class="seccionRango">
+              <label for="" class="labelHabilidades">Creatividad</label><input type="range" name="rangeCreatividad" id="rangeCreatividad" min="0" max="5" value="0" step="1">
+            </section>
+            <section class="seccionRango">
+              <label for="" class="labelHabilidades">Analisis Crítico</label><input type="range" name="rangeAnalisis" id="rangeAnalisis" min="0" max="5" value="0" step="1">
+            </section>
+            <section class="seccionRango">
+              <label for="" class="labelHabilidades">Eficiencia</label><input type="range" name="rangeEficiencia" id="rangeEficiencia" min="0" max="5" value="0" step="1">
+            </section>
+          </fieldset>
+
+        </form>
+        
+        <table id="tabla-goms">
+          <thead>
+            <tr>
+              <th class="operador">Operador</th>
+              <th class="dato">Dato</th>
+              <th class="contador-dato">P</th>
+              <th class="contador-dato">H</th>
+              <th class="contador-dato">K</th>
+              <th class="contador-dato">M</th>
+              <th class="contador-dato">B</th>
+              <th class="contador-dato">Date-picker</th>
+              <th class="contador-dato">Scrolling</th>
+              <th class="contador-dato">D</th>
+              <th class="contador-dato">R</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
