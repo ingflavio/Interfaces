@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Navbar = () => {
   return (
     <>
@@ -9,29 +11,32 @@ export const Navbar = () => {
           <div className="w-100 d-flex justify-content-between">
             <div>
               <i className="fa fa-envelope mx-2"></i>
-              <a
+              <Link
+                to="/"
                 className="navbar-sm-brand text-light text-decoration-none"
                 href="mailto:info@company.com"
               >
                 info@company.com
-              </a>
+              </Link>
               <i className="fa fa-phone mx-2"></i>
-              <a
+              <Link
+                to="/"
                 className="navbar-sm-brand text-light text-decoration-none"
                 href="tel:010-020-0340"
               >
                 010-020-0340
-              </a>
+              </Link>
             </div>
             <div>
-              <a
+              <Link
+                to="/"
                 className="text-light"
                 href="https://fb.com/templatemo"
                 target="_blank"
                 rel="sponsored"
               >
                 <i className="fab fa-facebook-f fa-sm fa-fw me-2"></i>
-              </a>
+              </Link>
               <a
                 className="text-light"
                 href="https://www.instagram.com/"
@@ -60,12 +65,12 @@ export const Navbar = () => {
 
       <nav className="navbar navbar-expand-lg navbar-light shadow">
         <div className="container d-flex justify-content-between align-items-center">
-          <a
+          <Link
+            to="/"
             className="navbar-brand text-success logo h1 align-self-center"
-            href="index.html"
           >
             Zay
-          </a>
+          </Link>
 
           <button
             className="navbar-toggler border-0"
@@ -86,29 +91,29 @@ export const Navbar = () => {
             <div className="flex-fill">
               <ul className="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                 <li className="nav-item">
-                  <a className="nav-link" href="index.html">
+                  <Link to="/" className="nav-link" href="index.html">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="about.html">
+                  <Link to="/about" className="nav-link">
                     About
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="shop.html">
+                  <Link to="/shop" className="nav-link">
                     Shop
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="contact.html">
+                  <Link to="/contact" className="nav-link">
                     Contact
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="login.html">
+                  <Link to="/login" className="nav-link">
                     Iniciar Sesion
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
