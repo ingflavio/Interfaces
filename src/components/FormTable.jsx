@@ -3,17 +3,41 @@ import React, { useState } from 'react';
 
 const  handleClick = async (event) => {
   event.preventDefault();
-  console.log(formValues)
+
+  const arrayCheckBox = document.querySelectorAll('.checkbox');
+  const idiomas = []
+
+  console.log(arrayCheckBox)
+
+  for(const e of arrayCheckBox){
+    if(e.checked){
+      idiomas.push(e.value)
+    }
+  }
+
+  const data = {
+    'nombre': document.querySelector('#inputNombre').value,
+    'apellido' : document.querySelector('#inputApellido').value,
+    'profesion' : document.querySelector('#inputProfesion').value,
+    // 'foto': document.querySelector('#inputFoto').value,
+    'telefono' : `${document.querySelector('#tipoTlf').value} ${document.querySelector('#inputTlf').value}` ,
+    'correo' : document.querySelector('#inputNombre').value,
+    'paginaWeb' : document.querySelector('#inputWeb').value,
+    'perfil' : document.querySelector('#areaPerfil').value,
+    'idiomas' : idiomas,
+    'competencias' : '',
+    'habilidades' : '',
+    'experienciasLab' : arrayListaLaboral,
+    'formacionAcademica' : '',
+  }
+
+  alert(JSON.stringify(data))
 
   // URL del servidor al que deseas enviar el JSON
-  const url = 'https://example.com/api';
+  // const url = 'https://example.com/api';
 
   // Datos JSON que deseas enviar
-  const data = {
-    nombre: 'Juan',
-    apellido: 'Pérez',
-    edad: 30
-  };
+
   
   // Configuración de la solicitud fetch
   const options = {
@@ -25,19 +49,19 @@ const  handleClick = async (event) => {
   };
 
   // Envío de la solicitud fetch
-  fetch(url, options)
-    .then(response => {
-      if (response.ok) {
-        return response.json(); // Parsear la respuesta JSON
-      }
-      throw new Error('Error en la solicitud');
-    })
-    .then(data => {
-      console.log('Respuesta del servidor:', data); // Manejar la respuesta del servidor
-    })
-    .catch(error => {
-      console.error('Error:', error); // Manejar errores
-    });
+  // fetch(url, options)
+  //   .then(response => {
+  //     if (response.ok) {
+  //       return response.json(); // Parsear la respuesta JSON
+  //     }
+  //     throw new Error('Error en la solicitud');
+  //   })
+  //   .then(data => {
+  //     console.log('Respuesta del servidor:', data); // Manejar la respuesta del servidor
+  //   })
+  //   .catch(error => {
+  //     console.error('Error:', error); // Manejar errores
+  //   });
 
 };
 
@@ -47,7 +71,86 @@ let TextFields = [
   'Profesion',
   'Web'
 ]
+const arrayListaLaboral = [];
+const arrayListaAcademica = [];
 
+const añadirExpLab = (event) => {
+  event.preventDefault();
+
+  const nombreEmpresa = document.querySelector("#inputNombreEmpresaLaboral"),
+        añoInicioLab = document.querySelector("#inputAñoIniLaboral"),
+        añoFinLab = document.querySelector("#inputAñoFinLaboral"),
+        experenciaLaboral = document.querySelector("#areaExpLab"),
+        listaLaboral = document.querySelector(".listaExpLaboral");
+  
+  const arrayDatosLaboral = [nombreEmpresa, añoInicioLab, añoFinLab, experenciaLaboral];
+
+  
+  if (arrayDatosLaboral.every(element => element.value != "")){
+    arrayListaLaboral.push({
+      empresaNombre : nombreEmpresa.value,
+      añoInicial : añoInicioLab.value,
+      añoFinal : añoFinLab.value,
+      experiencia : experenciaLaboral.value,
+    });
+  
+    let label = document.createElement('label')
+    label.innerText = nombreEmpresa.value
+    label.classList.add("labelListas")
+    listaLaboral.appendChild(label)
+    console.log(arrayListaLaboral)
+  }
+
+  nombreEmpresa.value = "";
+  añoInicioLab.value = "";
+  añoFinLab.value = "";
+  experenciaLaboral.value = "";
+
+};
+
+const añadirFormAcademi = (event) => {
+  event.preventDefault();
+
+  const nombreInstitucion = document.querySelector("#inputNombreInstAcademica"),
+        añoInicioAcademico = document.querySelector("#inputAñoIniAcademico"),
+        añoFinAcademico = document.querySelector("#inputAñoFinAcademico"),
+        carrera = document.querySelector("#inputCarrera"),
+        listaAcademica = document.querySelector(".listaAcademica");
+  
+  const arrayDatosAcademicos = [nombreInstitucion, añoInicioAcademico, añoFinAcademico, carrera];
+
+
+  if (arrayDatosAcademicos.every(element => element.value != "")){
+    arrayListaAcademica.push({
+      academiaNombre : nombreInstitucion.value,
+      añoInicial : añoInicioAcademico.value,
+      añoFinal : añoFinAcademico.value,
+      carreraObtenida : carrera.value,
+    });
+  
+    let label = document.createElement('label')
+    label.innerText = nombreInstitucion.value
+    label.classList.add("labelListas")
+    listaAcademica.appendChild(label)
+    console.log(arrayListaAcademica)
+  }
+
+  nombreInstitucion.value = "";
+  añoInicioAcademico.value = "";
+  añoFinAcademico.value = "";
+  carrera.value = "";
+  
+};
+
+// const añadirCompetencia = (event) => {
+//   event.preventDefault();
+
+//   #inputCompetenciaObt
+//   #rangeCompetencia
+//   .listaCompetencia
+  
+  
+// };
 
 export const FormTable = () => {
   const [formValues, setFormValues] = useState({});
@@ -63,6 +166,35 @@ export const FormTable = () => {
     acc[field] = '';
     return acc;
   }, {});
+
+  const [fixedRangeValues, setFixedRangeValues] = useState({
+    "liderazgo": 0,
+    'creatividad': 0,
+    'analisis': 0,
+    'eficiencia': 0
+  });
+
+  const [dynamicRangeValues, setDynamicRangeValues] = useState([0]);
+
+  const handleFixedRangeChange = (name, value) => {
+    console.log('ueu')
+      const { name, value } = event.target;
+      setFixedRangeValues((prevValues) => ({
+          ...prevValues,
+          [name]: value
+      }));
+  };
+
+  const handleDynamicRangeChange = (index, value) => {
+    console.log('ueu')
+      const newValues = [...dynamicRangeValues];
+      newValues[index] = value;
+      setDynamicRangeValues(newValues);
+  };
+
+  const addNewRange = () => {
+      setDynamicRangeValues((prevValues) => [...prevValues, 0]);
+  };
 
     return(
         <div className="form-table">
@@ -109,34 +241,47 @@ export const FormTable = () => {
                 <fieldset className="seccionesForm">
                     <label className="titulos">Nivel de Habilidades</label>
                     <section className="seccionRango">
-                    <label className="labelHabilidades">Liderazgo</label><input type="range" name="rangeLiderazgo" id="rangeLiderazgo" min="0" max="5" value="0" step="1"/>
+                    <label className="labelHabilidades">Liderazgo</label><input type="range" name="rangeLiderazgo" id="rangeLiderazgo" min={0} max={5} step={1} value={fixedRangeValues.liderazgo} onChange={handleFixedRangeChange}/>
                     </section>
                     <section className="seccionRango">
-                    <label className="labelHabilidades">Creatividad</label><input type="range" name="rangeCreatividad" id="rangeCreatividad" min="0" max="5" value="0" step="1"/>
+                    <label className="labelHabilidades">Creatividad</label><input type="range" name="rangeCreatividad" id="rangeCreatividad" min={0} max={5} step={1} value={fixedRangeValues.creatividad} onChange={handleFixedRangeChange}/>
                     </section>
                     <section className="seccionRango">
-                    <label className="labelHabilidades">Analisis Crítico</label><input type="range" name="rangeAnalisis" id="rangeAnalisis" min="0" max="5" value="0" step="1"/>
+                    <label className="labelHabilidades">Analisis Crítico</label><input type="range" name="rangeAnalisis" id="rangeAnalisis" min={0} max={5} step={1} value={fixedRangeValues.analisis} onChange={handleFixedRangeChange}/>
                     </section>
                     <section className="seccionRango">
-                    <label className="labelHabilidades">Eficiencia</label><input type="range" name="rangeEficiencia" id="rangeEficiencia" min="0" max="5" value="0" step="1"/>
+                    <label className="labelHabilidades">Eficiencia</label><input type="range" name="rangeEficiencia" id="rangeEficiencia" min={0} max={5} step={1} value={fixedRangeValues.eficiencia} onChange={handleFixedRangeChange}/>
                     </section>
                 </fieldset>
                 <fieldset className="seccionesForm">
                   <label className="titulos">Experiencia Laboral</label>
-                  <input type="text" className="inputs" placeholder="Nombre de Empresa"/>
-                  <input type="number" className="inputs" placeholder="Año Inicio"/>
-                  <input type="number" className="inputs" placeholder="Año Final"/>
+                  <input type="text" className="inputs" id='inputNombreEmpresaLaboral' placeholder="Nombre de Empresa"/>
+                  <input type="number" className="inputs" id='inputAñoIniLaboral' placeholder="Año Inicio"/>
+                  <input type="number" className="inputs" id='inputAñoFinLaboral' placeholder="Año Final"/>
                   <textarea name="areaExpLab" id="areaExpLab" placeholder="Experiencia obtenida" rows={10}></textarea>
-                  <button id="btnExpLab">+</button>
+                  <div className="listaExpLaboral"></div>
+                  <button id="btnExpLab" onClick={añadirExpLab}>+</button>
                 </fieldset>
                 <fieldset className="seccionesForm">
                   <label className="titulos">Formación Académica</label>
-                  <input type="text" className="inputs" placeholder="Nombre de Institución"/>
-                  <input type="number" className="inputs" placeholder="Año Inicio"/>
-                  <input type="number" className="inputs" placeholder="Año Final"/>
-                  <input type="text" className="inputs" placeholder="Carrera o Curso obtenido"></input>
-                  <button id="btnAcademica">+</button>
+                  <input type="text" className="inputs" id='inputNombreInstAcademica' placeholder="Nombre de Institución"/>
+                  <input type="number" className="inputs" id='inputAñoIniAcademico' placeholder="Año Inicio"/>
+                  <input type="number" className="inputs" id='inputAñoFinAcademico' placeholder="Año Final"/>
+                  <input type="text" className="inputs" id='inputCarrera' placeholder="Carrera o Curso obtenido"></input>
+                  <div className="listaAcademica"></div>
+                  <button id="btnAcademica" onClick={añadirFormAcademi}>+</button>
+                  
                 </fieldset>
+                <fieldset className="seccionesForm">
+                  <label className="titulos">Competencias</label>
+                  <input type="text" className="inputs" id='inputCompetenciaObt' placeholder="Competencia Obtenida"/>
+                  <label className="labelCompetencias">Nivel de competencia</label>
+                  <input type="range" name="rangeCompetencia" id="rangeCompetencia" min={0} max={5} step={1} value={dynamicRangeValues} onChange={handleDynamicRangeChange}/>
+                  <div className="listaCompetencia"></div>
+                  <button id="btnCompetencia" >+</button>
+                  {/* onClick={añadirCompetencia} */}
+                </fieldset>
+                <button type="submit" id='btnEnviarForm' onClick={handleClick}>Enviar</button>
             </form>
         
         <table id="tabla-goms">
@@ -184,7 +329,6 @@ export const FormTable = () => {
             </tr>
             </tbody>
         </table>
-        <button type="submit" id='btnEnviarForm' onClick={handleClick}>Enviar</button>
     </div>
     )
 }
