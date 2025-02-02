@@ -1,0 +1,222 @@
+:root{
+    --verdePrincipal: #198754;
+    --negroPrincipal: #212934;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* body {
+    display: flex;
+} */
+
+.contenedor {
+    display: flex;
+    width: 100%;
+}
+
+.contenedorMenu {
+    position: fixed;
+    height: 100vh;
+    
+}
+
+.menu {
+    background-color: var(--negroPrincipal);
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+}
+
+.tituloMenu {
+    margin: 20px auto;
+    font-size: 30px;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+.divBotonesMenu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 30px;
+}
+
+.btnsMenu {
+    font-size:25px;
+    width: 15vw;
+    border-radius: 7px;
+    border: none;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--verdePrincipal);
+    color: white;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+.btnsMenu:hover {
+    background-color: white;
+    color: var(--verdePrincipal);
+    transition-duration: 0.3s;
+}
+
+/* .mostrar {
+    width: 80%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    left: 20%;
+    gap: 20px;
+} */
+
+table {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--negroPrincipal);
+    width: 45%;
+    border-collapse: collapse;
+    border-left: 3px solid var(--verdePrincipal);
+    border-right: 3px solid var(--verdePrincipal);
+}
+
+th, td {
+    border-bottom: 3px solid #198754;
+    padding: 8px;
+    text-align: center;
+    color: white;
+}
+
+th {
+    background-color: #343a40; 
+}
+
+.operador {
+    width: 30%;
+}
+
+.dato {
+    width: 15%;
+}
+
+.contador-dato {
+    width: 5%;
+}
+
+.form-table {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-basis: 80%;
+}
+
+#formulario {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: var(--negroPrincipal)
+}
+
+#formulario .seccionesForm {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-bottom: 3px solid var(--verdePrincipal);
+    padding: 20px;
+}
+
+.divTlf {
+    margin-top: 10px;
+}
+
+.inputs, .titulos, .labels, .seccionRango, .labelIdiomas {
+    font-family: 'Roboto', sans-serif;
+}
+
+.labels{
+    color: white;
+    margin-top: 10px;
+}
+
+.inputs {
+    padding: 5px;
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.titulos {
+    text-align: center;
+    font-size: 50px;
+    color: #198754;
+    margin-bottom: 10px;
+}
+
+.seccionRango {
+    display: flex;
+    flex-direction: column;
+}
+
+.labelIdiomas, .labelCompetencias, .labelListas {
+    margin: 10px;
+    color: white;
+}
+
+.labelHabilidades {
+    color: white;
+    margin-top: 10px;
+}
+
+input[type="checkbox"]{
+    transform: scale(1.5);
+    margin-right: 10px;
+}
+
+#btnExpLab, #btnAcademica, #btnCompetencia{
+    background-color: #198754;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    margin: 10px auto;
+}
+
+#areaExpLab{
+    padding: 10px;
+}
+
+#btnEnviarForm{
+    width: 20%;
+    margin: 15px auto;
+
+}
+
+#btnEnviarForm {
+    font-size:20px;
+    width: 20%;
+    border-radius: 7px;
+    border: none;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--verdePrincipal);
+    color: white;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+#btnEnviarForm:hover {
+    background-color: white;
+    color: var(--verdePrincipal);
+    transition-duration: 0.3s;
+}
