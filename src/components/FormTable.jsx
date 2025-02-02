@@ -1,5 +1,9 @@
+import Field from './Field';
+import React, { useState } from 'react';
+
 const  handleClick = async (event) => {
   event.preventDefault();
+  console.log(formValues)
 
   // URL del servidor al que deseas enviar el JSON
   const url = 'https://example.com/api';
@@ -34,22 +38,45 @@ const  handleClick = async (event) => {
     .catch(error => {
       console.error('Error:', error); // Manejar errores
     });
- 
+
 };
+
+let TextFields = [
+  "Nombre",
+  "Apellido",
+  'Profesion',
+  'Web'
+]
 
 
 export const FormTable = () => {
+  const [formValues, setFormValues] = useState({});
+
+  const handleFieldChange = (name, value) => {
+    setFormValues({
+      ...formValues,
+      [name]: value
+    });
+  }; 
+
+  const initialFormValues = TextFields.reduce((acc, field) => {
+    acc[field] = '';
+    return acc;
+  }, {});
+
     return(
-        
         <div className="form-table">
             <form action="" method="post" id="formulario">
                 <fieldset className="seccionesForm">
                     <label className="titulos">Datos Personales</label>
-                    <input type="text" name="inputNombre" id="inputNombre" className="inputs" placeholder="Ingrese Nombre"/>
-                    <input type="text" name="inputApellido" id="inputApellido" className="inputs" placeholder="Ingrese Apellido"/>
-                    <input type="email" name="inputEmail" id="inputEmail" className="inputs" placeholder="Ingrese Email"/>
-                    <input type="text" name="inputProfesion" id="inputProfesion" className="inputs" placeholder="Ingrese Profesion"/>
-                    <input type="text" name="inputSitioWeb" id="inputSitioWeb" className="inputs" placeholder="Ingrese Sitio Web"/>
+                    {TextFields.map((nombre, index) => (
+                      <Field
+                        key={index}
+                        name={nombre}
+                        value={formValues[nombre] || ''}
+                        onChange={(value) => handleFieldChange(nombre, value)}
+                      />
+                    ))}
                     <div className="divTlf">
                     <label className="labels">Telefono</label>
                     <div className="divNroTlf">
@@ -63,36 +90,52 @@ export const FormTable = () => {
                         <input type="tel" name="inputTlf" id="inputTlf" className="inputs"/>
                     </div>
                     </div>
-                    <label for="" className="labels">Perfil</label>
+                    <label className="labels">Perfil</label>
                     <textarea name="areaPerfil" id="areaPerfil" placeholder="Describa un resumen de su perfil Profesional" rows="8" cols="50"></textarea>
                 </fieldset>
                 <fieldset className="seccionesForm idiomasSeccion">
-                    <label for="" className="titulos">Manejo de Idiomas</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Ingles" className="checkbox"/> Ingles</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Portugués" className="checkbox"/> Portugués</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Español" className="checkbox"/> Español</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Alemán" className="checkbox"/> Alemán</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Italiano" className="checkbox"/> Italiano</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Francés" className="checkbox"/> Francés</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Ruso" className="checkbox"/> Ruso</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Chino" className="checkbox"/> Chino</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Japones" className="checkbox"/> Japones</label>
+                    <label className="titulos">Manejo de Idiomas</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Ingles" className="checkbox" /> Ingles</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Portugués" className="checkbox" /> Portugués</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Español" className="checkbox" /> Español</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Alemán" className="checkbox" /> Alemán</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Italiano" className="checkbox" /> Italiano</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Francés" className="checkbox" /> Francés</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Ruso" className="checkbox" /> Ruso</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Chino" className="checkbox" /> Chino</label>
+                    <label className="labelIdiomas"><input type="checkbox" value="Japones" className="checkbox" /> Japones</label>
                     <label className="labelIdiomas"><input type="checkbox" className="checkbox" value="Otro"/> Otro <input className="inputs" type="text" placeholder="Ingrese el Idioma"/></label>
                 </fieldset>
                 <fieldset className="seccionesForm">
-                    <label for="" className="titulos">Nivel de Habilidades</label>
+                    <label className="titulos">Nivel de Habilidades</label>
                     <section className="seccionRango">
-                    <label for="" className="labelHabilidades">Liderazgo</label><input type="range" name="rangeLiderazgo" id="rangeLiderazgo" min="0" max="5" value="0" step="1"/>
+                    <label className="labelHabilidades">Liderazgo</label><input type="range" name="rangeLiderazgo" id="rangeLiderazgo" min="0" max="5" value="0" step="1"/>
                     </section>
                     <section className="seccionRango">
-                    <label for="" className="labelHabilidades">Creatividad</label><input type="range" name="rangeCreatividad" id="rangeCreatividad" min="0" max="5" value="0" step="1"/>
+                    <label className="labelHabilidades">Creatividad</label><input type="range" name="rangeCreatividad" id="rangeCreatividad" min="0" max="5" value="0" step="1"/>
                     </section>
                     <section className="seccionRango">
-                    <label for="" className="labelHabilidades">Analisis Crítico</label><input type="range" name="rangeAnalisis" id="rangeAnalisis" min="0" max="5" value="0" step="1"/>
+                    <label className="labelHabilidades">Analisis Crítico</label><input type="range" name="rangeAnalisis" id="rangeAnalisis" min="0" max="5" value="0" step="1"/>
                     </section>
                     <section className="seccionRango">
-                    <label for="" className="labelHabilidades">Eficiencia</label><input type="range" name="rangeEficiencia" id="rangeEficiencia" min="0" max="5" value="0" step="1"/>
+                    <label className="labelHabilidades">Eficiencia</label><input type="range" name="rangeEficiencia" id="rangeEficiencia" min="0" max="5" value="0" step="1"/>
                     </section>
+                </fieldset>
+                <fieldset className="seccionesForm">
+                  <label className="titulos">Experiencia Laboral</label>
+                  <input type="text" className="inputs" placeholder="Nombre de Empresa"/>
+                  <input type="number" className="inputs" placeholder="Año Inicio"/>
+                  <input type="number" className="inputs" placeholder="Año Final"/>
+                  <textarea name="areaExpLab" id="areaExpLab" placeholder="Experiencia obtenida" rows={10}></textarea>
+                  <button id="btnExpLab">+</button>
+                </fieldset>
+                <fieldset className="seccionesForm">
+                  <label className="titulos">Formación Académica</label>
+                  <input type="text" className="inputs" placeholder="Nombre de Institución"/>
+                  <input type="number" className="inputs" placeholder="Año Inicio"/>
+                  <input type="number" className="inputs" placeholder="Año Final"/>
+                  <input type="text" className="inputs" placeholder="Carrera o Curso obtenido"></input>
+                  <button id="btnAcademica">+</button>
                 </fieldset>
             </form>
         
@@ -141,6 +184,7 @@ export const FormTable = () => {
             </tr>
             </tbody>
         </table>
+        <button type="submit" id='btnEnviarForm' onClick={handleClick}>Enviar</button>
     </div>
     )
 }

@@ -12,6 +12,7 @@ import "./assets/css/slick-theme.min.css";
 import "./assets/css/templatemo.css";
 import "./assets/css/templatemo.min.css";
 import './assets/css/ventanaAdm.css';
+import "./assets/css/modal-style.css";
 import "./assets/js/custom.js"
 import "./assets/js/bootstrap.bundle.min.js";
 import "./assets/js/custom.js";

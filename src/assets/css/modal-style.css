@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#modalLogin {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 25px;
+    border-radius: 20px;
+    border: none;
+    background-color: #e4e4e4;
+    margin: auto;
+}
+
+#modalLogin .errorTituloModal {
+    color: red;
+    margin-bottom: 15px;
+    font-size: 30px;
+}
+
+#modalLogin .mensajeError, #btnModal {
+    font-size: 20px;
+}
+
+.mensajeError {
+    margin-bottom: 15px;
+}
+
+.msjFocusModal{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#btnModal {
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #198754;
+    color: white;
+    cursor: pointer;
+}
+
+#btnModal:hover {
+    background-color: #46c489;
+    color: black;
+}
+
+#modalLogin::backdrop {
+    background-color: rgba(0, 0, 0, 0.61);
+}

@@ -156,7 +156,7 @@ th {
 
 .titulos {
     text-align: center;
-    font-size: 20px;
+    font-size: 50px;
     color: #198754;
     margin-bottom: 10px;
 }
@@ -179,4 +179,19 @@ th {
 input[type="checkbox"]{
     transform: scale(1.5);
     margin-right: 10px;
+}
+
+#btnExpLab, #btnAcademica{
+    background-color: #198754;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    margin: 10px auto;
+}
+
+#areaExpLab{
+    padding: 10px;
 }
