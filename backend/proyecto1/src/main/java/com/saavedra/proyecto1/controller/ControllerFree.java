@@ -3,14 +3,17 @@ package com.saavedra.proyecto1.controller;
 import com.saavedra.proyecto1.Services.impl.DatosDelUsuarioServicesImpl;
 
 import com.saavedra.proyecto1.controller.Dtos.IniciarSesionRequest;
+import com.saavedra.proyecto1.controller.Dtos.IniciarSesionResponse;
 import com.saavedra.proyecto1.controller.Dtos.LoginRequest;
 import com.saavedra.proyecto1.entity.*;
 import com.saavedra.proyecto1.repository.*;
 import com.saavedra.proyecto1.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,18 +47,29 @@ public class ControllerFree {
     @Autowired
     private CompetenciasRepository competenciasRepository;
 
-    @PostMapping("/login")
+
+    @PostMapping("/register")
     public ResponseEntity<?> CrearUsuario(@RequestBody LoginRequest request) {
 
-        new ResponseEntity<>(HttpStatus.OK);
-        return ResponseEntity.ok(usuarioRepository.Guardar(request));
-
+        Optional<DatosDelUsuario> usuarioExistente = usuarioRepository.findByNombreDeUsuario(request.getNombreDeUsuario());
+        if (usuarioExistente.isPresent()) {
+            return ResponseEntity.badRequest().body("El usuario ya existe");
+        }
+        String resultado = usuarioRepository.Guardar(request);
+        return ResponseEntity.ok(resultado);
     }
-    @PostMapping("/sign-in")
+    @PostMapping("/login")
     public ResponseEntity<?> IniciarSesion(@RequestBody IniciarSesionRequest request) {
-        new ResponseEntity<>(HttpStatus.OK);
-        return ResponseEntity.ok(usuarioRepository.Login(request));
-
+        try {
+            IniciarSesionResponse response = usuarioRepository.Login(request);
+            return ResponseEntity.ok(response);
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.badRequest().body("Usuario no encontrado");
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.badRequest().body("Contraseña incorrecta");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor");
+        }
     }
     @PutMapping("/datos-extras")
     public ResponseEntity<?> actualizarDatos(@RequestBody DatosDelUsuario datosDelUsuario, @RequestParam("foto") MultipartFile foto) {
