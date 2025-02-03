@@ -1,334 +1,735 @@
-import Field from './Field';
-import React, { useState } from 'react';
-
-const  handleClick = async (event) => {
-  event.preventDefault();
-
-  const arrayCheckBox = document.querySelectorAll('.checkbox');
-  const idiomas = []
-
-  console.log(arrayCheckBox)
-
-  for(const e of arrayCheckBox){
-    if(e.checked){
-      idiomas.push(e.value)
-    }
-  }
-
-  const data = {
-    'nombre': document.querySelector('#inputNombre').value,
-    'apellido' : document.querySelector('#inputApellido').value,
-    'profesion' : document.querySelector('#inputProfesion').value,
-    // 'foto': document.querySelector('#inputFoto').value,
-    'telefono' : `${document.querySelector('#tipoTlf').value} ${document.querySelector('#inputTlf').value}` ,
-    'correo' : document.querySelector('#inputNombre').value,
-    'paginaWeb' : document.querySelector('#inputWeb').value,
-    'perfil' : document.querySelector('#areaPerfil').value,
-    'idiomas' : idiomas,
-    'competencias' : '',
-    'habilidades' : '',
-    'experienciasLab' : arrayListaLaboral,
-    'formacionAcademica' : '',
-  }
-
-  alert(JSON.stringify(data))
-
-  // URL del servidor al que deseas enviar el JSON
-  // const url = 'https://example.com/api';
-
-  // Datos JSON que deseas enviar
-
-  
-  // Configuración de la solicitud fetch
-  const options = {
-    method: 'POST', // Método de la solicitud (POST, en este caso)
-    headers: {
-      'Content-Type': 'application/json' // Tipo de contenido
-    },
-    body: JSON.stringify(data) // Datos JSON convertidos a string
-  };
-
-  // Envío de la solicitud fetch
-  // fetch(url, options)
-  //   .then(response => {
-  //     if (response.ok) {
-  //       return response.json(); // Parsear la respuesta JSON
-  //     }
-  //     throw new Error('Error en la solicitud');
-  //   })
-  //   .then(data => {
-  //     console.log('Respuesta del servidor:', data); // Manejar la respuesta del servidor
-  //   })
-  //   .catch(error => {
-  //     console.error('Error:', error); // Manejar errores
-  //   });
-
-};
-
-let TextFields = [
-  "Nombre",
-  "Apellido",
-  'Profesion',
-  'Web'
-]
-const arrayListaLaboral = [];
-const arrayListaAcademica = [];
-
-const añadirExpLab = (event) => {
-  event.preventDefault();
-
-  const nombreEmpresa = document.querySelector("#inputNombreEmpresaLaboral"),
-        añoInicioLab = document.querySelector("#inputAñoIniLaboral"),
-        añoFinLab = document.querySelector("#inputAñoFinLaboral"),
-        experenciaLaboral = document.querySelector("#areaExpLab"),
-        listaLaboral = document.querySelector(".listaExpLaboral");
-  
-  const arrayDatosLaboral = [nombreEmpresa, añoInicioLab, añoFinLab, experenciaLaboral];
-
-  
-  if (arrayDatosLaboral.every(element => element.value != "")){
-    arrayListaLaboral.push({
-      empresaNombre : nombreEmpresa.value,
-      añoInicial : añoInicioLab.value,
-      añoFinal : añoFinLab.value,
-      experiencia : experenciaLaboral.value,
-    });
-  
-    let label = document.createElement('label')
-    label.innerText = nombreEmpresa.value
-    label.classList.add("labelListas")
-    listaLaboral.appendChild(label)
-    console.log(arrayListaLaboral)
-  }
-
-  nombreEmpresa.value = "";
-  añoInicioLab.value = "";
-  añoFinLab.value = "";
-  experenciaLaboral.value = "";
-
-};
-
-const añadirFormAcademi = (event) => {
-  event.preventDefault();
-
-  const nombreInstitucion = document.querySelector("#inputNombreInstAcademica"),
-        añoInicioAcademico = document.querySelector("#inputAñoIniAcademico"),
-        añoFinAcademico = document.querySelector("#inputAñoFinAcademico"),
-        carrera = document.querySelector("#inputCarrera"),
-        listaAcademica = document.querySelector(".listaAcademica");
-  
-  const arrayDatosAcademicos = [nombreInstitucion, añoInicioAcademico, añoFinAcademico, carrera];
-
-
-  if (arrayDatosAcademicos.every(element => element.value != "")){
-    arrayListaAcademica.push({
-      academiaNombre : nombreInstitucion.value,
-      añoInicial : añoInicioAcademico.value,
-      añoFinal : añoFinAcademico.value,
-      carreraObtenida : carrera.value,
-    });
-  
-    let label = document.createElement('label')
-    label.innerText = nombreInstitucion.value
-    label.classList.add("labelListas")
-    listaAcademica.appendChild(label)
-    console.log(arrayListaAcademica)
-  }
-
-  nombreInstitucion.value = "";
-  añoInicioAcademico.value = "";
-  añoFinAcademico.value = "";
-  carrera.value = "";
-  
-};
-
-// const añadirCompetencia = (event) => {
-//   event.preventDefault();
-
-//   #inputCompetenciaObt
-//   #rangeCompetencia
-//   .listaCompetencia
-  
-  
-// };
+import { useState } from "react";
 
 export const FormTable = () => {
-  const [formValues, setFormValues] = useState({});
-
-  const handleFieldChange = (name, value) => {
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
-  }; 
-
-  const initialFormValues = TextFields.reduce((acc, field) => {
-    acc[field] = '';
-    return acc;
-  }, {});
-
-  const [fixedRangeValues, setFixedRangeValues] = useState({
-    "liderazgo": 0,
-    'creatividad': 0,
-    'analisis': 0,
-    'eficiencia': 0
+  const [formBody, setFormBody] = useState({
+    nombre: "",
+    apellido: "",
+    profesion: "",
+    telefonoPrefijo: "0424",
+    telefonoNumero: "",
+    correo: "",
+    paginaweb: "",
+    perfil: "",
+    idiomas: [],
+    competencia: [],
+    habilidades: [],
+    experiencialaboral: [],
+    formacion: [],
   });
 
-  const [dynamicRangeValues, setDynamicRangeValues] = useState([0]);
+  const [idioma, setIdioma] = useState([{ id: 1, idioma: "" }]);
+  const [competencia, setCompetencia] = useState([
+    { id: 1, competencia: "", porcentaje: "" },
+  ]);
+  const [habilidad, setHabilidad] = useState([
+    { id: 1, habilidad: "", porcentaje: "" },
+  ]);
+  const [experiencia, setExperiencia] = useState([
+    {
+      id: 1,
+      experiencia: "",
+      descripcion: "",
+      fechaInicial: "",
+      fechaFinal: "",
+    },
+  ]);
+  const [formacion, setFormacion] = useState([
+    {
+      id: 1,
+      formacion: "",
+      descripcion: "",
+      fechaInicial: "",
+      fechaFinal: "",
+    },
+  ]);
 
-  const handleFixedRangeChange = (event) => {
-    const { name, value } = event.target; // Desestructura name y value del evento
-    console.log('ueu');
-    setFixedRangeValues((prevValues) => ({
-        ...prevValues,
-        [name]: value,
+  const handleFormChange = (e) => {
+    const { id, value } = e.target;
+    console.log(formBody);
+    setFormBody((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const addElement = (setState, key) => {
+    setState((prev) => [...prev, { id: prev.length + 1, [key]: "" }]);
+  };
+
+  const removeLastElement = (setState) => {
+    setState((prev) => (prev.length > 1 ? prev.slice(0, -1) : prev));
+  };
+
+  const handleTodoList = (e, setState, key, index) => {
+    const { value } = e.target;
+    console.log(formacion);
+    setState((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, [key]: value } : item))
+    );
+  };
+
+  const handleSubmit = () => {
+    setFormBody((prevFormBody) => ({
+      ...prevFormBody,
+      idiomas: idioma.map((item) => item),
+      competencia: competencia.map((item) => item),
+      habilidades: habilidad.map((item) => item),
+      experiencialaboral: experiencia.map((item) => item),
+      formacion: formacion.map((item) => item),
     }));
-};
 
-  const handleDynamicRangeChange = (index, value) => {
-    console.log('ueu')
-      const newValues = [...dynamicRangeValues];
-      newValues[index] = value;
-      setDynamicRangeValues(newValues);
+    console.log(formBody);
   };
 
-  const addNewRange = () => {
-      setDynamicRangeValues((prevValues) => [...prevValues, 0]);
-  };
+  return (
+    <div className="container-fluid h-100 w-100 bg-black contentDashboard">
+      <div className="row">
+        <div className="col-12 col-md-6">
+          <div className="container form-group bg-white mt-3 p-3 rounded-3 p-0">
+            <h2 className="text-center">Registrar Datos</h2>
+            <div className="row">
+              <div className="col-12 col-md-6">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Nombre
+                  </label>
+                  <input
+                    onChange={handleFormChange}
+                    type="text"
+                    className="form-control"
+                    id="nombre"
+                  />
+                </div>
+              </div>
 
-    return(
-        <div className="form-table">
-            <form action="" method="post" id="formulario">
-                <fieldset className="seccionesForm">
-                    <label className="titulos">Datos Personales</label>
-                    {TextFields.map((nombre, index) => (
-                      <Field
-                        key={index}
-                        name={nombre}
-                        value={formValues[nombre] || ''}
-                        onChange={(value) => handleFieldChange(nombre, value)}
-                      />
-                    ))}
-                    <div className="divTlf">
-                    <label className="labels">Telefono</label>
-                    <div className="divNroTlf">
-                        <select name="tipoTlf" id="tipoTlf">
-                        <option value="412">0412</option>
-                        <option value="414">0414</option>
-                        <option value="416">0416</option>
-                        <option value="424">0424</option>
-                        <option value="424">0426</option>
-                        </select>
-                        <input type="tel" name="inputTlf" id="inputTlf" className="inputs"/>
+              <div className="col-12 col-md-6">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Apellido
+                  </label>
+                  <input
+                    onChange={handleFormChange}
+                    type="text"
+                    className="form-control"
+                    id="apellido"
+                  />
+                </div>
+              </div>
+
+              <div className="col-12 col-md-6">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Profesión
+                  </label>
+                  <input
+                    onChange={handleFormChange}
+                    type="text"
+                    className="form-control"
+                    id="profesion"
+                  />
+                </div>
+              </div>
+
+              <div className="col-12 col-md-6">
+                <div className="mb-3">
+                  <label htmlFor="phone" className="form-label">
+                    Teléfono
+                  </label>
+                  <div className="input-group">
+                    <select
+                      className="form-select"
+                      style={{ maxWidth: "80px" }}
+                      id="telefonoPrefijo"
+                      value={formBody.telefonoPrefijo}
+                      onChange={handleFormChange}
+                    >
+                      <option value="0424">0424</option>
+                      <option value="0412">0412</option>
+                      <option value="0414">0414</option>
+                      <option value="0416">0416</option>
+                    </select>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="telefonoNumero"
+                      value={formBody.telefonoNumero}
+                      onChange={handleFormChange}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-6">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Correo
+                  </label>
+                  <input
+                    onChange={handleFormChange}
+                    type="email"
+                    className="form-control"
+                    id="correo"
+                  />
+                </div>
+              </div>
+
+              <div className="col-12 col-md-6">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Pagina Web
+                  </label>
+                  <input
+                    onChange={handleFormChange}
+                    type="text"
+                    className="form-control"
+                    id="paginaweb"
+                  />
+                </div>
+              </div>
+
+              <div className="col-12 col-md-12">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Perfil
+                  </label>
+                  <input
+                    onChange={handleFormChange}
+                    type="text"
+                    className="form-control"
+                    id="perfil"
+                  />
+                </div>
+              </div>
+
+              <div className="col-12 col-md-12">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Idiomas
+                  </label>
+                  {idioma.map((item, index) => (
+                    <input
+                      key={index}
+                      onChange={(e) =>
+                        handleTodoList(e, setIdioma, "idioma", index)
+                      }
+                      type="text"
+                      className="form-control mb-3"
+                      name="idioma"
+                      id={`idioma-${index}`}
+                      placeholder={`Idioma ${index + 1}`}
+                    />
+                  ))}
+                </div>
+                <div className="submitButton">
+                  <button
+                    onClick={() => removeLastElement(setIdioma)}
+                    className="btn btn-danger text-end m-2"
+                  >
+                    -
+                  </button>
+                  <button
+                    onClick={() => addElement(setIdioma, "idioma")}
+                    className="btn btn-success text-end my-2"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-12">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Competencia
+                  </label>
+
+                  {competencia.map((item, index) => (
+                    <div key={index} className="col-12 col-md-12">
+                      <div className="row">
+                        <div className="col-10">
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setCompetencia,
+                                "competencia",
+                                index
+                              )
+                            }
+                            type="text"
+                            className="form-control mb-3"
+                            name="competencia"
+                            id={`competencia-${index}`}
+                            placeholder={`Competencia ${index + 1}`}
+                          />
+                        </div>
+                        <div className="col-2">
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setCompetencia,
+                                "porcentaje",
+                                index
+                              )
+                            }
+                            id={`barra${index}`}
+                            type="number"
+                            className="form-control mb-3"
+                            placeholder="%"
+                            min="1"
+                            max="100"
+                            onInput={(e) => {
+                              const value = parseInt(e.target.value, 10);
+                              if (value < 1) e.target.value = 1;
+                              if (value > 100) e.target.value = 100;
+                            }}
+                          ></input>
+                        </div>
+                      </div>
                     </div>
+                  ))}
+                </div>
+                <div className="submitButton">
+                  <button
+                    onClick={() => removeLastElement(setCompetencia)}
+                    className="btn btn-danger text-end m-2"
+                  >
+                    -
+                  </button>
+                  <button
+                    onClick={() => addElement(setCompetencia, "competencia")}
+                    className="btn btn-success text-end m-2"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-12">
+                <div className="mb-3">
+                  <label htmlFor="#" className="form-label">
+                    Habilidades
+                  </label>
+                  {habilidad.map((item, index) => (
+                    <div key={index} className="col-12 col-md-12">
+                      <div className="row">
+                        <div className="col-10">
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setHabilidad,
+                                "habilidad",
+                                index
+                              )
+                            }
+                            type="text"
+                            name="habilidad"
+                            className="form-control mb-3"
+                            id={`habilidad-${index}`}
+                            placeholder={`Habilidad ${index + 1}`}
+                          />
+                        </div>
+                        <div className="col-2">
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setHabilidad,
+                                "porcentaje",
+                                index
+                              )
+                            }
+                            id={`barra${index}`}
+                            type="number"
+                            className="form-control mb-3"
+                            placeholder="Estrellas"
+                            min="1"
+                            max="5"
+                            onInput={(e) => {
+                              const value = parseInt(e.target.value, 10);
+                              if (value < 1) e.target.value = 1;
+                              if (value > 5) e.target.value = 5;
+                            }}
+                          ></input>
+                        </div>
+                      </div>
                     </div>
-                    <label className="labels">Perfil</label>
-                    <textarea name="areaPerfil" id="areaPerfil" placeholder="Describa un resumen de su perfil Profesional" rows="8" cols="50"></textarea>
-                </fieldset>
-                <fieldset className="seccionesForm idiomasSeccion">
-                    <label className="titulos">Manejo de Idiomas</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Ingles" className="checkbox" /> Ingles</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Portugués" className="checkbox" /> Portugués</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Español" className="checkbox" /> Español</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Alemán" className="checkbox" /> Alemán</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Italiano" className="checkbox" /> Italiano</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Francés" className="checkbox" /> Francés</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Ruso" className="checkbox" /> Ruso</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Chino" className="checkbox" /> Chino</label>
-                    <label className="labelIdiomas"><input type="checkbox" value="Japones" className="checkbox" /> Japones</label>
-                    <label className="labelIdiomas"><input type="checkbox" className="checkbox" value="Otro"/> Otro <input className="inputs" type="text" placeholder="Ingrese el Idioma"/></label>
-                </fieldset>
-                <fieldset className="seccionesForm">
-                    <label className="titulos">Nivel de Habilidades</label>
-                    <section className="seccionRango">
-                    <label className="labelHabilidades">Liderazgo</label><input type="range" name="rangeLiderazgo" id="rangeLiderazgo" min={0} max={5} step={1} value={fixedRangeValues.liderazgo} onChange={handleFixedRangeChange}/>
-                    </section>
-                    <section className="seccionRango">
-                    <label className="labelHabilidades">Creatividad</label><input type="range" name="rangeCreatividad" id="rangeCreatividad" min={0} max={5} step={1} value={fixedRangeValues.creatividad} onChange={handleFixedRangeChange}/>
-                    </section>
-                    <section className="seccionRango">
-                    <label className="labelHabilidades">Analisis Crítico</label><input type="range" name="rangeAnalisis" id="rangeAnalisis" min={0} max={5} step={1} value={fixedRangeValues.analisis} onChange={handleFixedRangeChange}/>
-                    </section>
-                    <section className="seccionRango">
-                    <label className="labelHabilidades">Eficiencia</label><input type="range" name="rangeEficiencia" id="rangeEficiencia" min={0} max={5} step={1} value={fixedRangeValues.eficiencia} onChange={handleFixedRangeChange}/>
-                    </section>
-                </fieldset>
-                <fieldset className="seccionesForm">
-                  <label className="titulos">Experiencia Laboral</label>
-                  <input type="text" className="inputs" id='inputNombreEmpresaLaboral' placeholder="Nombre de Empresa"/>
-                  <input type="number" className="inputs" id='inputAñoIniLaboral' placeholder="Año Inicio"/>
-                  <input type="number" className="inputs" id='inputAñoFinLaboral' placeholder="Año Final"/>
-                  <textarea name="areaExpLab" id="areaExpLab" placeholder="Experiencia obtenida" rows={10}></textarea>
-                  <div className="listaExpLaboral"></div>
-                  <button id="btnExpLab" onClick={añadirExpLab}>+</button>
-                </fieldset>
-                <fieldset className="seccionesForm">
-                  <label className="titulos">Formación Académica</label>
-                  <input type="text" className="inputs" id='inputNombreInstAcademica' placeholder="Nombre de Institución"/>
-                  <input type="number" className="inputs" id='inputAñoIniAcademico' placeholder="Año Inicio"/>
-                  <input type="number" className="inputs" id='inputAñoFinAcademico' placeholder="Año Final"/>
-                  <input type="text" className="inputs" id='inputCarrera' placeholder="Carrera o Curso obtenido"></input>
-                  <div className="listaAcademica"></div>
-                  <button id="btnAcademica" onClick={añadirFormAcademi}>+</button>
-                  
-                </fieldset>
-                <fieldset className="seccionesForm">
-                  <label className="titulos">Competencias</label>
-                  <input type="text" className="inputs" id='inputCompetenciaObt' placeholder="Competencia Obtenida"/>
-                  <label className="labelCompetencias">Nivel de competencia</label>
-                  <input type="range" name="rangeCompetencia" id="rangeCompetencia" min={0} max={5} step={1} value={dynamicRangeValues} onChange={handleDynamicRangeChange}/>
-                  <div className="listaCompetencia"></div>
-                  <button id="btnCompetencia" >+</button>
-                  {/* onClick={añadirCompetencia} */}
-                </fieldset>
-                <button type="submit" id='btnEnviarForm' onClick={handleClick}>Enviar</button>
-            </form>
-        
-        <table id="tabla-goms">
-          <thead>
-            <tr>
-              <th className="operador">Operador</th>
-              <th className="dato">Dato</th>
-              <th className="contador-dato">P</th>
-              <th className="contador-dato">H</th>
-              <th className="contador-dato">K</th>
-              <th className="contador-dato">M</th>
-              <th className="contador-dato">B</th>
-              <th className="contador-dato">Date-picker</th>
-              <th className="contador-dato">Scrolling</th>
-              <th className="contador-dato">D</th>
-              <th className="contador-dato">R</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
+                  ))}
+                </div>
+                <div className="submitButton">
+                  <button
+                    onClick={() => removeLastElement(setHabilidad)}
+                    className="btn btn-danger text-end m-2"
+                  >
+                    -
+                  </button>
+                  <button
+                    onClick={() => addElement(setHabilidad, "habilidad")}
+                    className="btn btn-success text-end m-2"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-12">
+                <div className="">
+                  <label htmlFor="#" className="form-label">
+                    Experiencias Laborales
+                  </label>
+                  {experiencia.map((item, index) => (
+                    <div key={index} className="col-12 col-md-12 mb-3">
+                      <div className="row">
+                        <div className="col-6">
+                          <label htmlFor="#" className="form-label"></label>
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setExperiencia,
+                                "experiencia",
+                                index
+                              )
+                            }
+                            type="text"
+                            className="form-control mb-3"
+                            name="experiencia"
+                            id={`experiencia-${index}`}
+                            placeholder={`Experiencia ${index + 1}`}
+                          />
+                        </div>
+                        <div className="col-3">
+                          <label htmlFor="startDate">Inicio</label>
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setExperiencia,
+                                "fechaInicial",
+                                index
+                              )
+                            }
+                            id="startDate"
+                            className="form-control"
+                            type="date"
+                            placeholder="Inicio"
+                          />
+                        </div>
+                        <div className="col-3">
+                          <label htmlFor="finalDate">Final</label>
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setExperiencia,
+                                "fechaFinal",
+                                index
+                              )
+                            }
+                            id="finalDate"
+                            className="form-control"
+                            type="date"
+                            placeholder="Final"
+                          />
+                        </div>
+
+                        <div className="col-12">
+                          <textarea
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setExperiencia,
+                                "descripcion",
+                                index
+                              )
+                            }
+                            className="form-control"
+                            id={`textAreaExperiencia${index}`}
+                            rows="3"
+                            placeholder={`Descripción de experiencia ${
+                              index + 1
+                            }`}
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="submitButton">
+                  <button
+                    onClick={() => removeLastElement(setExperiencia)}
+                    className="btn btn-danger text-end m-2"
+                  >
+                    -
+                  </button>
+                  <button
+                    onClick={() => addElement(setExperiencia, "experiencia")}
+                    className="btn btn-success text-end m-2"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div className="col-12 col-md-12">
+                <div className="">
+                  <label htmlFor="#" className="form-label">
+                    Formación
+                  </label>
+                  {formacion.map((item, index) => (
+                    <div key={index} className="col-12 col-md-12 mb-3">
+                      <div className="row">
+                        <div className="col-6">
+                          <label htmlFor="#" className="form-label"></label>
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setFormacion,
+                                "formacion",
+                                index
+                              )
+                            }
+                            type="text"
+                            className="form-control mb-3"
+                            name="formacion"
+                            id={`formacion-${index}`}
+                            placeholder={`Formacion ${index + 1}`}
+                          />
+                        </div>
+                        <div className="col-3">
+                          <label htmlFor="startDate">Inicio</label>
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setFormacion,
+                                "fechaInicial",
+                                index
+                              )
+                            }
+                            id="startDate"
+                            className="form-control"
+                            type="date"
+                            placeholder="Inicio"
+                          />
+                        </div>
+                        <div className="col-3">
+                          <label htmlFor="finalDate">Final</label>
+                          <input
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setFormacion,
+                                "fechaFinal",
+                                index
+                              )
+                            }
+                            id="finalDate"
+                            className="form-control"
+                            type="date"
+                            placeholder="Final"
+                          />
+                        </div>
+
+                        <div className="col-12">
+                          <textarea
+                            onChange={(e) =>
+                              handleTodoList(
+                                e,
+                                setFormacion,
+                                "descripcion",
+                                index
+                              )
+                            }
+                            className="form-control"
+                            id={`textAreaExperiencia${index}`}
+                            rows="3"
+                            placeholder={`Descripción de formación ${
+                              index + 1
+                            }`}
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="submitButton">
+                  <button
+                    onClick={() => removeLastElement(setFormacion)}
+                    className="btn btn-danger text-end m-2"
+                  >
+                    -
+                  </button>
+                  <button
+                    onClick={() => addElement(setFormacion, "formacion")}
+                    className="btn btn-success text-end m-2"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <span className="text-center">Ubicación</span>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4743.874428242662!2d-67.96971352418878!3d10.264400189854896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e805cbbd82e1ddf%3A0xb979854c355714fa!2sConjunto%20Residencial%20San%20Francisco!5e1!3m2!1ses-419!2sve!4v1738553809162!5m2!1ses-419!2sve"
+                width="600"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen // Corregido: allowfullscreen a allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <div className="submitButton">
+              <button
+                onClick={handleSubmit}
+                className="btn btn-primary text-end my-2"
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="col-12 col-md-6 form-group bg-white mt-3 p-3 rounded-3">
+          <h4 className="text-center mt-2">Registrar de Acciones</h4>
+          <table className="tableActions w-full">
+            <thead>
+              <tr>
+                <th scope="col">Operador</th>
+                <th scope="col">Dato</th>
+                <th scope="col">K</th>
+                <th scope="col">P</th>
+                <th scope="col">H</th>
+                <th scope="col">M</th>
+                <th scope="col">B</th>
+                <th scope="col">Scrolling</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ingresar Nombre</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Apellido</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Profesión</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Teléfono</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Correo</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Pagina Web</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Perfil</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Idiomas</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar competencia</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Habilidades</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Experiencias Laborales</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Ingresar Formacioón</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
             </tbody>
-        </table>
+          </table>
+        </div>
+        {/*AQUI COLOCAS INFO ABAJO */}
+      </div>
     </div>
-    )
-}
+  );
+};

@@ -1,0 +1,96 @@
+.imageCurriculum {
+  max-width: 100%;
+  height: auto;
+}
+
+.textoCurriculum {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.textoCurriculum p {
+  font-size: 40px !important;
+}
+
+.textoCurriculum span {
+  font-size: 40px !important;
+}
+
+.textoCurriculum h1 {
+  font-size: 80px !important;
+}
+
+.iconCv {
+  width: 50px;
+  height: 50px;
+}
+
+.contentDashboard {
+  max-height: calc(100vh - 40px - 70px - 70px);
+  overflow-y: scroll;
+}
+
+.sidebarDashboard {
+  max-height: calc(100vh - 40px - 70px - 70px);
+}
+
+.nav-link {
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.form-group input {
+  border: 1px solid #4f4f4f;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.form-group textarea {
+  border: 1px solid #4f4f4f;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.tableActions {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tableActions thead {
+  background-color: #333;
+  color: white;
+}
+
+.tableActions th,
+.tableActions td {
+  width: 100%;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.tableActions td {
+  border-top: 1px solid #ddd;
+}
+
+.submitButton{
+  display: flex;
+  justify-content: end;
+}
+
+body.admin-view #preefoter {
+  display: none !important;
+}
+
+body.admin-view .footerCopyrights {
+  max-height: 70px;
+}
+
+body.admin-view nav {
+  max-height: 70px;
+}

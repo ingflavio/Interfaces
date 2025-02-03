@@ -2,15 +2,16 @@ import { useState } from "react";
 import { URL } from "../API/URL";
 import axios from "axios";
 
-export const Login = () => {
+export const Register = () => {
   const [formBody, setFormBody] = useState({
     nombreDeUsuario: "stalin",
+    gmail: "stalin@gmail.com",
     contrasena: "12345",
   });
 
   const requestLogin = async () => {
     try {
-      const response = await axios.post(URL + "sign-in", formBody);
+      const response = await axios.post(URL + "Login", formBody);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -23,7 +24,7 @@ export const Login = () => {
         <div className="row py-5">
           <div className="col-md-6 m-auto text-center">
             <div className="p-4 border rounded">
-              <h2 className="mb-4">Sing In</h2>
+              <h2 className="mb-4">Sing Up</h2>
               <div className="form-group mb-3">
                 <input
                   type="email"

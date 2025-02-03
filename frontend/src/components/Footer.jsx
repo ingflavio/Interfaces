@@ -3,7 +3,7 @@ export const Footer = () => {
     <>
       
       <footer className="bg-dark" id="tempaltemo_footer">
-        <div className="container">
+        <div className="container" id="preefoter">
           <div className="row">
             <div className="col-md-4 pt-5">
               <h2 className="h2 text-success border-bottom pb-3 border-light logo">
@@ -172,7 +172,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="w-100 bg-black py-3">
+        <div className="w-100 bg-black py-3 footerCopyrights">
           <div className="container">
             <div className="row pt-2">
               <div className="col-12">
