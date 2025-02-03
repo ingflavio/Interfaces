@@ -44,14 +44,14 @@ public class ControllerFree {
     @Autowired
     private CompetenciasRepository competenciasRepository;
 
-    @PostMapping("/login")
+    @PostMapping("/register")
     public ResponseEntity<?> CrearUsuario(@RequestBody LoginRequest request) {
 
         new ResponseEntity<>(HttpStatus.OK);
         return ResponseEntity.ok(usuarioRepository.Guardar(request));
 
     }
-    @PostMapping("/sign-in")
+    @PostMapping("/login")
     public ResponseEntity<?> IniciarSesion(@RequestBody IniciarSesionRequest request) {
         new ResponseEntity<>(HttpStatus.OK);
         return ResponseEntity.ok(usuarioRepository.Login(request));
