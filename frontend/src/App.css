@@ -7,3 +7,20 @@
 .modalIcons {
   font-size: 40px;
 }
+
+@media print {
+  body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+  }
+  .container-fluid {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .row {
+    page-break-inside: avoid; /* Evita que las filas se corten entre páginas */
+  }
+}

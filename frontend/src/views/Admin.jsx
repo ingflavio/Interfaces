@@ -18,7 +18,7 @@ export const Admin = () => {
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-2 p-0">
+          <div className="col-2 p-0 bg-black">
             <SideBar setMenuOption={setMenuOption} />
           </div>
           <div className="col-10 p-0">

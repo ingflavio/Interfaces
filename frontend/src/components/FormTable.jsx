@@ -54,12 +54,18 @@ export const FormTable = () => {
     },
   ]);
 
-  const [ubicacion, setUbicacion] = useState("");
+  const [telefonoPrefijo, setTelefonoPrefijo] = useState("0424");
 
-  const [photo, setPhoto] = useState("");
+  const handleTelPre = (e) => {
+    console.log(telefonoPrefijo);
+    setTelefonoPrefijo(e.target.value);
+  };
+
+  const [ubicacion, setUbicacion] = useState("");
 
   const handleFormChange = (e) => {
     const { id, value } = e.target;
+    console.log(formBody);
     setFormBody((prev) => ({ ...prev, [id]: value }));
   };
 
@@ -83,6 +89,8 @@ export const FormTable = () => {
   const handleSubmit = async () => {
     const updatedFormBody = {
       ...formBody,
+      telefono: `${telefonoPrefijo + formBody.telefonoNumero}`,
+      direccion: `${ubicacion}`,
       idiomas: idioma.map((item) => item.idioma),
       competencias: competencia.map((item) => ({
         nombre: item.nombre,
@@ -205,7 +213,7 @@ export const FormTable = () => {
                       style={{ maxWidth: "80px" }}
                       id="telefonoPrefijo"
                       value={formBody.telefonoPrefijo}
-                      onChange={handleFormChange}
+                      onChange={handleTelPre}
                     >
                       <option value="0424">0424</option>
                       <option value="0412">0412</option>
@@ -232,7 +240,7 @@ export const FormTable = () => {
                     onChange={handleFormChange}
                     type="email"
                     className="form-control"
-                    id="correo"
+                    id="gmail"
                   />
                 </div>
               </div>
