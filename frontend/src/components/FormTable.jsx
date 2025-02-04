@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
-import useAuthStore from "../store/useAuthStore";
 import { URL } from "../API/URL";
+import useAuthStore from "../store/useAuthStore";
+import { Map } from "./Map";
 
 export const FormTable = () => {
   const { user } = useAuthStore();
@@ -16,14 +17,14 @@ export const FormTable = () => {
     perfil: "",
     direccion: "",
     foto: "",
-    idiomas: [], // Cambia de 'idioma' a 'idiomas'
-    competencias: [], // Cambia de 'competencia' a 'competencias'
+    idiomas: [],
+    competencias: [],
     habilidades: [],
-    experenciasLaborales: [], // Cambia de 'experiencialaboral' a 'experenciasLaborales'
+    experenciasLaborales: [],
     formacion: [],
-    permisos: [], // Asegúrate de tener este campo si es necesario
-    contrasena: "", // Agrega este campo si es necesario
-});
+    permisos: [],
+    contrasena: "",
+  });
 
   const [idioma, setIdioma] = useState([{ id: 1, idioma: "" }]);
   const [competencia, setCompetencia] = useState([
@@ -51,69 +52,69 @@ export const FormTable = () => {
     },
   ]);
 
+  const [photo, setPhoto] = useState("");
+
   const handleFormChange = (e) => {
     const { id, value } = e.target;
     setFormBody((prev) => ({ ...prev, [id]: value }));
-};
+  };
 
-const addElement = (setState, key) => {
+  const addElement = (setState, key) => {
     setState((prev) => [...prev, { id: prev.length + 1, [key]: "" }]);
-};
+  };
 
-const removeLastElement = (setState) => {
+  const removeLastElement = (setState) => {
     setState((prev) => (prev.length > 1 ? prev.slice(0, -1) : prev));
-};
+  };
 
-const handleTodoList = (e, setState, key, index) => {
+  const handleTodoList = (e, setState, key, index) => {
     const { value } = e.target;
     setState((prev) =>
-        prev.map((item, i) => (i === index ? { ...item, [key]: value } : item))
+      prev.map((item, i) => (i === index ? { ...item, [key]: value } : item))
     );
-};
+  };
 
-const handleSubmit = async () => {
+  const handleSubmit = async () => {
     const updatedFormBody = {
-        ...formBody,
-        idiomas: idioma.map((item) => item.idioma), // Asegúrate de que 'idioma' coincida con el campo esperado
-        competencias: competencia.map((item) => ({
-            nombre: item.nombre,
-            habilidad: parseInt(item.habilidad, 10),
-        })), // Asegúrate de que 'habilidad' sea un número
-        habilidades: habilidad.map((item) => ({
-            habilidad: parseInt(item.habilidad, 10),
-            nombreHabilidad: item.nombreHabilidad,
-        })), // Asegúrate de que 'habilidad' sea un número y 'nombreHabilidad' coincida
-        experenciasLaborales: experiencia.map((item) => ({
-            empresa: item.empresa,
-            descripcion: item.descripcion,
-            fechaIni: item.fechaIni,
-            fechaFin: item.fechaFin,
-        })), // Asegúrate de que los nombres de los campos coincidan
-        formacion: formacion.map((item) => ({
-            instituto: item.instituto,
-            titulo: item.titulo,
-            fechaIni: item.fechaIni,
-            fechaFin: item.fechaFin,
-        })), // Asegúrate de que los nombres de los campos coincidan
-        permisos: ["READ"], // Ajusta esto según sea necesario
+      ...formBody,
+      idiomas: idioma.map((item) => item.idioma),
+      competencias: competencia.map((item) => ({
+        nombre: item.nombre,
+        habilidad: parseInt(item.habilidad, 10),
+      })),
+      habilidades: habilidad.map((item) => ({
+        habilidad: parseInt(item.habilidad, 10),
+        nombreHabilidad: item.nombreHabilidad,
+      })),
+      experenciasLaborales: experiencia.map((item) => ({
+        empresa: item.empresa,
+        descripcion: item.descripcion,
+        fechaIni: item.fechaIni,
+        fechaFin: item.fechaFin,
+      })),
+      formacion: formacion.map((item) => ({
+        instituto: item.instituto,
+        titulo: item.titulo,
+        fechaIni: item.fechaIni,
+        fechaFin: item.fechaFin,
+      })),
+      permisos: ["READ"],
     };
 
-    // Imprime el JSON en la consola
     console.log("JSON a enviar:", JSON.stringify(updatedFormBody, null, 2));
 
     try {
-        const res = await axios.put(URL + "datos-extras", updatedFormBody, {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-                "Content-Type": "application/json",
-            },
-        });
-        console.log(res);
+      const res = await axios.put(URL + "datos-extras", updatedFormBody, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res);
     } catch (error) {
-        console.error("Error al enviar los datos:", error);
+      console.error("Error al enviar los datos:", error);
     }
-};
-
+  };
 
   return (
     <div className="container-fluid h-100 w-100 bg-black contentDashboard">
@@ -584,17 +585,19 @@ const handleSubmit = async () => {
                   </button>
                 </div>
               </div>
-
               <span className="text-center">Ubicación</span>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4743.874428242662!2d-67.96971352418878!3d10.264400189854896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e805cbbd82e1ddf%3A0xb979854c355714fa!2sConjunto%20Residencial%20San%20Francisco!5e1!3m2!1ses-419!2sve!4v1738553809162!5m2!1ses-419!2sve"
-                width="600"
-                height="450"
-                style={{ border: 0 }}
-                allowFullScreen // Corregido: allowfullscreen a allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+              <Map />
+              <div className="form-group my-3">
+                <div className="input-group">
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="inputGroupFile04"
+                    aria-describedby="inputGroupFileAddon04"
+                    aria-label="Upload"
+                  />
+                </div>
+              </div>
             </div>
             <div className="submitButton">
               <button
