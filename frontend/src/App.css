@@ -1,0 +1,9 @@
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modalIcons {
+  font-size: 40px;
+}

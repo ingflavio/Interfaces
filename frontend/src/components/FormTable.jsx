@@ -1,15 +1,22 @@
+import axios from "axios";
 import { useState } from "react";
+import useAuthStore from "../store/useAuthStore";
 
 export const FormTable = () => {
+  const { user } = useAuthStore();
+
   const [formBody, setFormBody] = useState({
     nombre: "",
     apellido: "",
     profesion: "",
     telefonoPrefijo: "0424",
     telefonoNumero: "",
-    correo: "",
-    paginaweb: "",
+    telefono: "",
+    gmail: "",
+    sitioWeb: "",
     perfil: "",
+    direccion: "",
+    foto: "",
     idiomas: [],
     competencia: [],
     habilidades: [],
@@ -19,7 +26,7 @@ export const FormTable = () => {
 
   const [idioma, setIdioma] = useState([{ id: 1, idioma: "" }]);
   const [competencia, setCompetencia] = useState([
-    { id: 1, competencia: "", porcentaje: "" },
+    { id: 1, nombre: "", habilidad: "" },
   ]);
   const [habilidad, setHabilidad] = useState([
     { id: 1, habilidad: "", porcentaje: "" },
@@ -27,25 +34,24 @@ export const FormTable = () => {
   const [experiencia, setExperiencia] = useState([
     {
       id: 1,
-      experiencia: "",
+      empresa: "",
       descripcion: "",
-      fechaInicial: "",
-      fechaFinal: "",
+      fechaIni: "",
+      fechaFin: "",
     },
   ]);
   const [formacion, setFormacion] = useState([
     {
       id: 1,
-      formacion: "",
-      descripcion: "",
-      fechaInicial: "",
-      fechaFinal: "",
+      instituto: "",
+      titulo: "",
+      fechaIni: "",
+      fechaFin: "",
     },
   ]);
 
   const handleFormChange = (e) => {
     const { id, value } = e.target;
-    console.log(formBody);
     setFormBody((prev) => ({ ...prev, [id]: value }));
   };
 
@@ -59,23 +65,28 @@ export const FormTable = () => {
 
   const handleTodoList = (e, setState, key, index) => {
     const { value } = e.target;
-    console.log(formacion);
+    console.log(competencia);
     setState((prev) =>
       prev.map((item, i) => (i === index ? { ...item, [key]: value } : item))
     );
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setFormBody((prevFormBody) => ({
       ...prevFormBody,
       idiomas: idioma.map((item) => item),
-      competencia: competencia.map((item) => item),
+      competencias: competencia.map((item) => item),
       habilidades: habilidad.map((item) => item),
-      experiencialaboral: experiencia.map((item) => item),
+      experenciasLaborales: experiencia.map((item) => item),
       formacion: formacion.map((item) => item),
     }));
-
-    console.log(formBody);
+    const res = await axios.put(URL + "datos-extras", formBody, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(res);
   };
 
   return (
@@ -179,7 +190,7 @@ export const FormTable = () => {
                     onChange={handleFormChange}
                     type="text"
                     className="form-control"
-                    id="paginaweb"
+                    id="sitioWeb"
                   />
                 </div>
               </div>
@@ -245,12 +256,7 @@ export const FormTable = () => {
                         <div className="col-10">
                           <input
                             onChange={(e) =>
-                              handleTodoList(
-                                e,
-                                setCompetencia,
-                                "competencia",
-                                index
-                              )
+                              handleTodoList(e, setCompetencia, "nombre", index)
                             }
                             type="text"
                             className="form-control mb-3"
@@ -265,7 +271,7 @@ export const FormTable = () => {
                               handleTodoList(
                                 e,
                                 setCompetencia,
-                                "porcentaje",
+                                "habilidad",
                                 index
                               )
                             }
@@ -316,7 +322,7 @@ export const FormTable = () => {
                               handleTodoList(
                                 e,
                                 setHabilidad,
-                                "habilidad",
+                                "nombreHabilidad",
                                 index
                               )
                             }
@@ -333,7 +339,7 @@ export const FormTable = () => {
                               handleTodoList(
                                 e,
                                 setHabilidad,
-                                "porcentaje",
+                                "habilidad",
                                 index
                               )
                             }
@@ -385,7 +391,7 @@ export const FormTable = () => {
                               handleTodoList(
                                 e,
                                 setExperiencia,
-                                "experiencia",
+                                "empresa",
                                 index
                               )
                             }
@@ -403,7 +409,7 @@ export const FormTable = () => {
                               handleTodoList(
                                 e,
                                 setExperiencia,
-                                "fechaInicial",
+                                "fechaIni",
                                 index
                               )
                             }
@@ -420,7 +426,7 @@ export const FormTable = () => {
                               handleTodoList(
                                 e,
                                 setExperiencia,
-                                "fechaFinal",
+                                "fechaFin",
                                 index
                               )
                             }
@@ -484,7 +490,7 @@ export const FormTable = () => {
                               handleTodoList(
                                 e,
                                 setFormacion,
-                                "formacion",
+                                "instituto",
                                 index
                               )
                             }
@@ -499,12 +505,7 @@ export const FormTable = () => {
                           <label htmlFor="startDate">Inicio</label>
                           <input
                             onChange={(e) =>
-                              handleTodoList(
-                                e,
-                                setFormacion,
-                                "fechaInicial",
-                                index
-                              )
+                              handleTodoList(e, setFormacion, "fechaIni", index)
                             }
                             id="startDate"
                             className="form-control"
@@ -516,12 +517,7 @@ export const FormTable = () => {
                           <label htmlFor="finalDate">Final</label>
                           <input
                             onChange={(e) =>
-                              handleTodoList(
-                                e,
-                                setFormacion,
-                                "fechaFinal",
-                                index
-                              )
+                              handleTodoList(e, setFormacion, "fechaFin", index)
                             }
                             id="finalDate"
                             className="form-control"
@@ -533,12 +529,7 @@ export const FormTable = () => {
                         <div className="col-12">
                           <textarea
                             onChange={(e) =>
-                              handleTodoList(
-                                e,
-                                setFormacion,
-                                "descripcion",
-                                index
-                              )
+                              handleTodoList(e, setFormacion, "titulo", index)
                             }
                             className="form-control"
                             id={`textAreaExperiencia${index}`}
@@ -728,7 +719,6 @@ export const FormTable = () => {
             </tbody>
           </table>
         </div>
-        {/*AQUI COLOCAS INFO ABAJO */}
       </div>
     </div>
   );

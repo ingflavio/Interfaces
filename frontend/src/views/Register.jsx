@@ -1,20 +1,38 @@
 import { useState } from "react";
 import { URL } from "../API/URL";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
   const [formBody, setFormBody] = useState({
-    nombreDeUsuario: "stalin",
-    gmail: "stalin@gmail.com",
-    contrasena: "12345",
+    nombreDeUsuario: "",
+    gmail: "",
+    contrasena: "",
   });
+  const [response, setResponse] = useState("");
 
-  const requestLogin = async () => {
+  let navigate = useNavigate();
+
+  const handleFormBody = (e) => {
+    const { id, value } = e.target;
+    setFormBody((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const requestRegister = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post(URL + "Login", formBody);
-      console.log(response);
+      const res = await axios.post(URL + "register", formBody);
+      if (res.status === 200) {
+        alert("Registro exitoso, iniciar sesión");
+        navigate("/login");
+      }
     } catch (error) {
-      console.log(error);
+      setResponse(error);
+      if (response.status == 400) {
+        alert(response.message);
+      } else {
+        alert(error);
+      }
     }
   };
 
@@ -27,9 +45,21 @@ export const Register = () => {
               <h2 className="mb-4">Sing Up</h2>
               <div className="form-group mb-3">
                 <input
+                  onChange={handleFormBody}
+                  type="text"
+                  className="form-control mt-1"
+                  id="nombreDeUsuario"
+                  name="username"
+                  placeholder="Ingrese su nombre de usuario"
+                  required
+                />
+              </div>
+              <div className="form-group mb-3">
+                <input
+                  onChange={handleFormBody}
                   type="email"
                   className="form-control mt-1"
-                  id="idEmail"
+                  id="gmail"
                   name="email"
                   placeholder="Ingrese su correo"
                   required
@@ -37,16 +67,17 @@ export const Register = () => {
               </div>
               <div className="form-group mb-3">
                 <input
-                  type="password"
+                  onChange={handleFormBody}
+                  type="current-password"
                   className="form-control mt-1"
-                  id="idPassword"
+                  id="contrasena"
                   name="password"
                   placeholder="Ingrese su contraseña"
                   required
                 />
               </div>
               <button
-                onClick={requestLogin}
+                onClick={requestRegister}
                 type="submit"
                 className="btn btn-success btn-lg px-3"
                 id="idBtn"
@@ -57,15 +88,6 @@ export const Register = () => {
           </div>
         </div>
       </form>
-
-      <dialog id="modalLogin">
-        <h3 className="errorTituloModal">ERROR</h3>
-        <p className="mensajeError">
-          El usuario ingresado no existe,{" "}
-          <span className="msjFocusModal">intentelo nuevamente!</span>
-        </p>
-        <button id="btnModal">Cerrar</button>
-      </dialog>
     </>
   );
 };

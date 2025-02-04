@@ -7,6 +7,8 @@ import { Register } from "./views/Register.jsx";
 import { Contact } from "./views/Contact.jsx";
 import { About } from "./views/About.jsx";
 import { Admin } from "./views/Admin.jsx";
+import { ProtectRoutes } from "./Routes/ProtectRoutes.jsx";
+import { NoProtectRoutes } from "./Routes/NoProtectRoutes.jsx";
 
 export const App = () => {
   const location = useLocation();
@@ -18,11 +20,17 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="about" element={<About />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
         <Route path="shop" element={<Shop />} />
         <Route path="contact" element={<Contact />} />
-        <Route path="admin" element={<Admin />} />
+
+        <Route element={<NoProtectRoutes />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+
+        <Route element={<ProtectRoutes />}>
+          <Route path="admin" element={<Admin />} />
+        </Route>
       </Routes>
     </>
   );

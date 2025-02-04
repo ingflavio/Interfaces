@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import useAuthStore from "../store/useAuthStore";
 
 export const Navbar = () => {
+  const { isAuthenticated, logout } = useAuthStore();
+
   return (
     <>
       <nav
@@ -110,11 +113,33 @@ export const Navbar = () => {
                     Contact
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/login" className="nav-link">
-                    Iniciar Sesion
-                  </Link>
-                </li>
+                {isAuthenticated ? (
+                  <>
+                    <li className="nav-item">
+                      <Link to="/admin" className="nav-link">
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <a onClick={logout} className="nav-link">
+                        Logout
+                      </a>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <Link to="/login" className="nav-link">
+                        Sign In
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/register" className="nav-link">
+                      Sign Up
+                      </Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
             <div className="navbar align-self-center d-flex">

@@ -42,7 +42,7 @@ public class ConfigSecurity {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http-> {
-                    http.requestMatchers(HttpMethod.POST,"/Api/register").permitAll();
+                    http.requestMatchers(HttpMethod.POST,"/Api/login").permitAll();
                     http.requestMatchers(HttpMethod.POST,"/Api/register").permitAll();
                     http.requestMatchers(HttpMethod.GET,"/Api/Todos").authenticated();
                     http.requestMatchers(HttpMethod.PUT,"/Api/datos-extras").authenticated();
