@@ -66,7 +66,7 @@ public class DatosDelUsuario {
 
     @OneToMany(mappedBy = "datosDelUsuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private List<HabildadesEntities> habildades;
+    private List<HabilidadesEntities> habilidades;
 
     private String Foto;
 

@@ -16,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -97,12 +96,11 @@ public class ControllerFree {
             usuarioActual.setDireccion(datosDelUsuario.getDireccion());
             usuarioActual.setNombre(datosDelUsuario.getNombre());
 
-
             CrearDatos(usuarioActual, datosDelUsuario.getFormacion(), datosDelUsuario.getCompetencias(),
-                    datosDelUsuario.getHabildades(), datosDelUsuario.getExperenciasLaborales());
+                    datosDelUsuario.getHabilidades(), datosDelUsuario.getExperenciasLaborales());
 
            //usuarioActual.setFoto(usuarioRepository.GuardarFoto(foto));
-            usuarioActual.setFoto("foto");
+            usuarioActual.setTelefono("asdas");
 
             usuarioRepository1.save(usuarioActual);
 
@@ -141,39 +139,25 @@ public class ControllerFree {
     }
 
     void CrearDatos(DatosDelUsuario usuarioActual, List<FormacionAcademicaEntity> formacion, List<CompetenciasEntity> competencias,
-                    List<HabildadesEntities> habildades, List<ExperenciaLaboralEntity> experenciasLaborales) {
-        // Validar y procesar la lista de formación
-        if (formacion != null) {
-            for (FormacionAcademicaEntity formacionAcademicaEntity : formacion) {
-                formacionAcademicaEntity.setDatosDelUsuario(usuarioActual);
-                formacionRepository.save(formacionAcademicaEntity);
-            }
+                    List<HabilidadesEntities> habilidades, List<ExperenciaLaboralEntity> experenciasLaborales) {
+        for (FormacionAcademicaEntity formacionAcademicaEntity : formacion) {
+            formacionAcademicaEntity.setDatosDelUsuario(usuarioActual);
+            formacionRepository.save(formacionAcademicaEntity);
+        }
+        for (HabilidadesEntities habildadesEntities : habilidades) {
+            habildadesEntities.setDatosDelUsuario(usuarioActual);
+            habilidadesRepository.save(habildadesEntities);
         }
 
-        // Validar y procesar la lista de habilidades
-        if (habildades != null) {
-            for (HabildadesEntities habildadesEntities : habildades) {
-                habildadesEntities.setDatosDelUsuario(usuarioActual);
-                habilidadesRepository.save(habildadesEntities);
-            }
+        for (CompetenciasEntity competenciasEntities : competencias) {
+            competenciasEntities.setDatosDelUsuario(usuarioActual);
+            competenciasRepository.save(competenciasEntities);
         }
 
-        // Validar y procesar la lista de competencias
-        if (competencias != null) {
-            for (CompetenciasEntity competenciasEntities : competencias) {
-                competenciasEntities.setDatosDelUsuario(usuarioActual);
-                competenciasRepository.save(competenciasEntities);
-            }
+        for (ExperenciaLaboralEntity experenciaLaboralEntity : experenciasLaborales) {
+            experenciaLaboralEntity.setDatosDelUsuario(usuarioActual);
+            experenciaLaboralRepository.save(experenciaLaboralEntity);
         }
-
-        // Validar y procesar la lista de experiencias laborales
-        if (experenciasLaborales != null) {
-            for (ExperenciaLaboralEntity experenciaLaboralEntity : experenciasLaborales) {
-                experenciaLaboralEntity.setDatosDelUsuario(usuarioActual);
-                experenciaLaboralRepository.save(experenciaLaboralEntity);
-            }
-        }
-    }
 
 
 
@@ -181,3 +165,4 @@ public class ControllerFree {
 
 
 
+}

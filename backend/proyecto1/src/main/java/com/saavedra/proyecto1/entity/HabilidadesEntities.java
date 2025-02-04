@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class HabildadesEntities {
+public class HabilidadesEntities {
 
 
     @jakarta.persistence.Id

@@ -44,7 +44,7 @@ public class ConfigSecurity {
                 .authorizeHttpRequests(http-> {
                     http.requestMatchers(HttpMethod.POST,"/Api/login").permitAll();
                     http.requestMatchers(HttpMethod.POST,"/Api/register").permitAll();
-                    http.requestMatchers(HttpMethod.GET,"/Api/Todos").authenticated();
+                    http.requestMatchers(HttpMethod.GET,"/Api/Todos").permitAll();
                     http.requestMatchers(HttpMethod.PUT,"/Api/datos-extras").authenticated();
                     http.requestMatchers(HttpMethod.GET,"/Api/datos-extras").authenticated();
 

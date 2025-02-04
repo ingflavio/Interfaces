@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import useAuthStore from "../store/useAuthStore";
+import { URL } from "../API/URL";
 
 export const FormTable = () => {
   const { user } = useAuthStore();
@@ -9,20 +10,20 @@ export const FormTable = () => {
     nombre: "",
     apellido: "",
     profesion: "",
-    telefonoPrefijo: "0424",
-    telefonoNumero: "",
     telefono: "",
     gmail: "",
     sitioWeb: "",
     perfil: "",
     direccion: "",
     foto: "",
-    idiomas: [],
-    competencia: [],
+    idiomas: [], // Cambia de 'idioma' a 'idiomas'
+    competencias: [], // Cambia de 'competencia' a 'competencias'
     habilidades: [],
-    experiencialaboral: [],
+    experenciasLaborales: [], // Cambia de 'experiencialaboral' a 'experenciasLaborales'
     formacion: [],
-  });
+    permisos: [], // Asegúrate de tener este campo si es necesario
+    contrasena: "", // Agrega este campo si es necesario
+});
 
   const [idioma, setIdioma] = useState([{ id: 1, idioma: "" }]);
   const [competencia, setCompetencia] = useState([
@@ -53,41 +54,66 @@ export const FormTable = () => {
   const handleFormChange = (e) => {
     const { id, value } = e.target;
     setFormBody((prev) => ({ ...prev, [id]: value }));
-  };
+};
 
-  const addElement = (setState, key) => {
+const addElement = (setState, key) => {
     setState((prev) => [...prev, { id: prev.length + 1, [key]: "" }]);
-  };
+};
 
-  const removeLastElement = (setState) => {
+const removeLastElement = (setState) => {
     setState((prev) => (prev.length > 1 ? prev.slice(0, -1) : prev));
-  };
+};
 
-  const handleTodoList = (e, setState, key, index) => {
+const handleTodoList = (e, setState, key, index) => {
     const { value } = e.target;
-    console.log(competencia);
     setState((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, [key]: value } : item))
+        prev.map((item, i) => (i === index ? { ...item, [key]: value } : item))
     );
-  };
+};
 
-  const handleSubmit = async () => {
-    setFormBody((prevFormBody) => ({
-      ...prevFormBody,
-      idiomas: idioma.map((item) => item),
-      competencias: competencia.map((item) => item),
-      habilidades: habilidad.map((item) => item),
-      experenciasLaborales: experiencia.map((item) => item),
-      formacion: formacion.map((item) => item),
-    }));
-    const res = await axios.put(URL + "datos-extras", formBody, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(res);
-  };
+const handleSubmit = async () => {
+    const updatedFormBody = {
+        ...formBody,
+        idiomas: idioma.map((item) => item.idioma), // Asegúrate de que 'idioma' coincida con el campo esperado
+        competencias: competencia.map((item) => ({
+            nombre: item.nombre,
+            habilidad: parseInt(item.habilidad, 10),
+        })), // Asegúrate de que 'habilidad' sea un número
+        habilidades: habilidad.map((item) => ({
+            habilidad: parseInt(item.habilidad, 10),
+            nombreHabilidad: item.nombreHabilidad,
+        })), // Asegúrate de que 'habilidad' sea un número y 'nombreHabilidad' coincida
+        experenciasLaborales: experiencia.map((item) => ({
+            empresa: item.empresa,
+            descripcion: item.descripcion,
+            fechaIni: item.fechaIni,
+            fechaFin: item.fechaFin,
+        })), // Asegúrate de que los nombres de los campos coincidan
+        formacion: formacion.map((item) => ({
+            instituto: item.instituto,
+            titulo: item.titulo,
+            fechaIni: item.fechaIni,
+            fechaFin: item.fechaFin,
+        })), // Asegúrate de que los nombres de los campos coincidan
+        permisos: ["READ"], // Ajusta esto según sea necesario
+    };
+
+    // Imprime el JSON en la consola
+    console.log("JSON a enviar:", JSON.stringify(updatedFormBody, null, 2));
+
+    try {
+        const res = await axios.put(URL + "datos-extras", updatedFormBody, {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(res);
+    } catch (error) {
+        console.error("Error al enviar los datos:", error);
+    }
+};
+
 
   return (
     <div className="container-fluid h-100 w-100 bg-black contentDashboard">
