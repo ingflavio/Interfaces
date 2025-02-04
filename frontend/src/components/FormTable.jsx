@@ -77,48 +77,76 @@ export const FormTable = () => {
     );
   };
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+
+  // const handleSubmit = async () => {
+  //   const updatedFormBody = {
+  //     ...formBody,
+  //     idiomas: idioma.map((item) => item.idioma),
+  //     competencias: competencia.map((item) => ({
+  //       nombre: item.nombre,
+  //       habilidad: parseInt(item.habilidad, 10),
+  //     })),
+  //     habilidades: habilidad.map((item) => ({
+  //       habilidad: parseInt(item.habilidad, 10),
+  //       nombreHabilidad: item.nombreHabilidad,
+  //     })),
+  //     experenciasLaborales: experiencia.map((item) => ({
+  //       empresa: item.empresa,
+  //       descripcion: item.descripcion,
+  //       fechaIni: item.fechaIni,
+  //       fechaFin: item.fechaFin,
+  //     })),
+  //     formacion: formacion.map((item) => ({
+  //       instituto: item.instituto,
+  //       titulo: item.titulo,
+  //       fechaIni: item.fechaIni,
+  //       fechaFin: item.fechaFin,
+  //     })),
+  //     ubicacion: ubicacion,
+  //     permisos: ["READ"],
+  //   };
+
+  //   console.log("JSON a enviar:", JSON.stringify(updatedFormBody, null, 2));
+
+  //   try {
+  //     const res = await axios.put(URL + "datos-extras", updatedFormBody, {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.error("Error al enviar los datos:", error);
+  //   }
+  // };
+
   const handleSubmit = async () => {
-    const updatedFormBody = {
-      ...formBody,
-      idiomas: idioma.map((item) => item.idioma),
-      competencias: competencia.map((item) => ({
-        nombre: item.nombre,
-        habilidad: parseInt(item.habilidad, 10),
-      })),
-      habilidades: habilidad.map((item) => ({
-        habilidad: parseInt(item.habilidad, 10),
-        nombreHabilidad: item.nombreHabilidad,
-      })),
-      experenciasLaborales: experiencia.map((item) => ({
-        empresa: item.empresa,
-        descripcion: item.descripcion,
-        fechaIni: item.fechaIni,
-        fechaFin: item.fechaFin,
-      })),
-      formacion: formacion.map((item) => ({
-        instituto: item.instituto,
-        titulo: item.titulo,
-        fechaIni: item.fechaIni,
-        fechaFin: item.fechaFin,
-      })),
-      ubicacion: ubicacion,
-      permisos: ["READ"],
-    };
-
-    console.log("JSON a enviar:", JSON.stringify(updatedFormBody, null, 2));
-
+    if (!selectedFile) {
+      console.error("No file selected");
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append("foto", selectedFile);
+  
     try {
-      const res = await axios.put(URL + "datos-extras", updatedFormBody, {
+      const res = await axios.put(URL + "datos-extras/foto", formData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log(res);
     } catch (error) {
-      console.error("Error al enviar los datos:", error);
+      console.error("Error al enviar la foto:", error);
     }
   };
+  
+
+
 
   return (
     <div className="container-fluid h-100 w-100 bg-black contentDashboard">
@@ -592,16 +620,18 @@ export const FormTable = () => {
               <span className="text-center">Ubicación</span>
               <Map setUbicacion={setUbicacion} />
               <div className="form-group my-3">
-                <div className="input-group">
-                  <input
-                    type="file"
-                    className="form-control"
-                    id="inputGroupFile04"
-                    aria-describedby="inputGroupFileAddon04"
-                    aria-label="Upload"
-                  />
-                </div>
+              <div className="input-group">
+                <input
+                  type="file"
+                  className="form-control"
+                  id="inputGroupFile04"
+                  aria-describedby="inputGroupFileAddon04"
+                  aria-label="Upload"
+                  onChange={(e) => setSelectedFile(e.target.files[0])}
+                />
               </div>
+            </div>
+
             </div>
             <div className="submitButton">
               <button
