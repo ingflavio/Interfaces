@@ -6,7 +6,7 @@ import { Map } from "./Map";
 
 export const FormTable = () => {
   const { user } = useAuthStore();
-  console.log(user.token)
+  console.log(user.token);
 
   const [formBody, setFormBody] = useState({
     nombre: "",
@@ -108,40 +108,42 @@ export const FormTable = () => {
       permisos: ["READ"],
     };
 
+    console.log("JSON a enviar:", JSON.stringify(updatedFormBody, null, 2));
+
     try {
-      const res = await axios.put(URL + "datos-extras", updatedFormBody, {
+      const resDatos = await axios.put(URL + "datos-extras", updatedFormBody, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "application/json",
         },
       });
-      console.log(res);
+      console.log(resDatos);
     } catch (error) {
       console.error("Error al enviar los datos:", error);
+      return; // Si hay un error, detenemos la ejecución aquí
+    }
+
+    // Segunda petición: Subida de la foto
+    if (!selectedFile) {
+      console.error("No file selected");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("foto", selectedFile);
+
+    try {
+      const resFoto = await axios.put(URL + "datos-extras/foto", formData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(resFoto);
+    } catch (error) {
+      console.error("Error al enviar la foto:", error);
     }
   };
-
-    // const handleSubmit = async () => {
-    //   if (!selectedFile) {
-    //     console.error("No file selected");
-    //     return;
-    //   }
-
-    //   const formData = new FormData();
-    //   formData.append("foto", selectedFile);
-
-    //   try {
-    //     const res = await axios.put(URL + "datos-extras/foto", formData, {
-    //       headers: {
-    //         Authorization: `Bearer ${user.token}`,
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     });
-    //     console.log(res);
-    //   } catch (error) {
-    //     console.error("Error al enviar la foto:", error);
-    //   }
-    // };
 
   return (
     <div className="container-fluid h-100 w-100 bg-black contentDashboard">

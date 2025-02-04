@@ -9,32 +9,59 @@ import axios from "axios";
 
 export const ProfileUser = () => {
   const { user } = useAuthStore();
+  const [userData, setUserData] = useState(null);
+  const [userError, setUserError] = useState(null);
   const [imagen, setImagen] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/Api/datos-extras",
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+              "Content-Type": "application/json",
+            },
+            responseType: "json",
+          }
+        );
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Error al obtener los datos:", error);
+        setUserError("Error al obtener los datos del usuario.");
+      }
+    };
+
     const obtenerFoto = async () => {
       try {
-        const token = user.token;
         const response = await axios.get(
           "http://localhost:8080/Api/datos-extras/foto",
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${user?.token}`,
             },
             responseType: "blob",
           }
         );
+
         const imagenUrl = URL.createObjectURL(response.data);
         setImagen(imagenUrl);
       } catch (err) {
-        setError("Error al obtener la foto");
+        setError("Error al obtener la foto.");
         console.error(err);
       }
     };
 
+    fetchData();
     obtenerFoto();
-  }, []);
+  }, [user]); // Dependencia `user` para actualizar datos si cambia el usuario
+
+  // 🔹 Monitorear cambios en `userData`
+  useEffect(() => {
+    console.log("userData actualizado:", userData);
+  }, [userData]);
 
   return (
     <>
@@ -52,7 +79,7 @@ export const ProfileUser = () => {
             )}
           </div>
           <div className="col-12 col-md-8 textoCurriculum px-4">
-            <p className="text-white">Alejandro</p>
+            <p className="text-white"></p>
             <h1 className="text-white">
               <b>Torres</b>
             </h1>
@@ -63,15 +90,7 @@ export const ProfileUser = () => {
         <div className="row p-5">
           <div className="col-12 col-md-8 text-white">
             <h1>Mi Perfil</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <p>{""}</p>
           </div>
           <div className="col-12 col-md-4 text-white">
             <div className="d-flex align-items-center mb-3">

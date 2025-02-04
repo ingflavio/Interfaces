@@ -24,15 +24,20 @@ export const Login = () => {
   const requestLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(URL + "login", formBody);
-      login(res.data);
-      if (res.status == 200) {
+      const res = await axios.post("http://localhost:8080/Api/login", formBody);
+      if (res.status === 200) {
+        login(res.data);
         navigate("/admin");
       } else {
         console.error("Error en la respuesta:", res);
+        setResponse({ status: res.status, response: res.data });
       }
     } catch (error) {
-      setResponse(error);
+      console.error("Error en la solicitud:", error);
+      setResponse({
+        status: error.response?.status || 500,
+        response: error.response?.data || "Error desconocido",
+      });
     }
   };
 
