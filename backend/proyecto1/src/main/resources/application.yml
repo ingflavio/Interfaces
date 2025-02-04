@@ -10,9 +10,9 @@ spring:
     url: jdbc:mysql://mysql_test:3306/Interfaces
     username: root
     password: docker2
-    # url: jdbc:mysql://localhost:3306/Interfaces
-    # username: root
-    # password: flavio2000
+    #url: jdbc:mysql://localhost:3306/Interfaces
+    #username: root
+    #password: flavio2000
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

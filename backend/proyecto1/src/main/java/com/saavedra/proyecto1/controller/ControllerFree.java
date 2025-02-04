@@ -72,7 +72,8 @@ public class ControllerFree {
         }
     }
     @PutMapping("/datos-extras")
-    public ResponseEntity<?> actualizarDatos(@RequestBody DatosDelUsuario datosDelUsuario, @RequestParam("foto") MultipartFile foto) {
+    public ResponseEntity<?> actualizarDatos(@RequestBody DatosDelUsuario datosDelUsuario//, @RequestParam("foto") MultipartFile foto
+    ) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String authUsername = authentication.getName();
@@ -85,8 +86,6 @@ public class ControllerFree {
 
             DatosDelUsuario usuarioActual = usuarioEntity.get();
             System.out.println(usuarioActual.getNombreDeUsuario() + " hola??");
-
-
             usuarioActual.setPermisos(datosDelUsuario.getPermisos());
             usuarioActual.setProfesion(datosDelUsuario.getProfesion());
             usuarioActual.setIdiomas(datosDelUsuario.getIdiomas());
@@ -98,10 +97,12 @@ public class ControllerFree {
             usuarioActual.setDireccion(datosDelUsuario.getDireccion());
             usuarioActual.setNombre(datosDelUsuario.getNombre());
 
+
             CrearDatos(usuarioActual, datosDelUsuario.getFormacion(), datosDelUsuario.getCompetencias(),
                     datosDelUsuario.getHabildades(), datosDelUsuario.getExperenciasLaborales());
 
-            usuarioActual.setFoto(usuarioRepository.GuardarFoto(foto));
+           //usuarioActual.setFoto(usuarioRepository.GuardarFoto(foto));
+            usuarioActual.setFoto("foto");
 
             usuarioRepository1.save(usuarioActual);
 
@@ -139,26 +140,40 @@ public class ControllerFree {
 
     }
 
-    void CrearDatos(DatosDelUsuario usuarioActual, List<FormacionAcademicaEntity> formacion,List<CompetenciasEntity> competencias,
-                    List<HabildadesEntities> habildades,List<ExperenciaLaboralEntity> experenciasLaborales) {
-        for (FormacionAcademicaEntity formacionAcademicaEntity : formacion) {
-            formacionAcademicaEntity.setDatosDelUsuario(usuarioActual);
-            formacionRepository.save(formacionAcademicaEntity);
-        }
-        for (HabildadesEntities habildadesEntities : habildades) {
-            habildadesEntities.setDatosDelUsuario(usuarioActual);
-            habilidadesRepository.save(habildadesEntities);
-        }
-
-        for (CompetenciasEntity competenciasEntities : competencias) {
-            competenciasEntities.setDatosDelUsuario(usuarioActual);
-            competenciasRepository.save(competenciasEntities);
+    void CrearDatos(DatosDelUsuario usuarioActual, List<FormacionAcademicaEntity> formacion, List<CompetenciasEntity> competencias,
+                    List<HabildadesEntities> habildades, List<ExperenciaLaboralEntity> experenciasLaborales) {
+        // Validar y procesar la lista de formación
+        if (formacion != null) {
+            for (FormacionAcademicaEntity formacionAcademicaEntity : formacion) {
+                formacionAcademicaEntity.setDatosDelUsuario(usuarioActual);
+                formacionRepository.save(formacionAcademicaEntity);
+            }
         }
 
-        for (ExperenciaLaboralEntity experenciaLaboralEntity : experenciasLaborales) {
-            experenciaLaboralEntity.setDatosDelUsuario(usuarioActual);
-            experenciaLaboralRepository.save(experenciaLaboralEntity);
+        // Validar y procesar la lista de habilidades
+        if (habildades != null) {
+            for (HabildadesEntities habildadesEntities : habildades) {
+                habildadesEntities.setDatosDelUsuario(usuarioActual);
+                habilidadesRepository.save(habildadesEntities);
+            }
         }
+
+        // Validar y procesar la lista de competencias
+        if (competencias != null) {
+            for (CompetenciasEntity competenciasEntities : competencias) {
+                competenciasEntities.setDatosDelUsuario(usuarioActual);
+                competenciasRepository.save(competenciasEntities);
+            }
+        }
+
+        // Validar y procesar la lista de experiencias laborales
+        if (experenciasLaborales != null) {
+            for (ExperenciaLaboralEntity experenciaLaboralEntity : experenciasLaborales) {
+                experenciaLaboralEntity.setDatosDelUsuario(usuarioActual);
+                experenciaLaboralRepository.save(experenciaLaboralEntity);
+            }
+        }
+    }
 
 
 
@@ -166,4 +181,3 @@ public class ControllerFree {
 
 
 
-}
