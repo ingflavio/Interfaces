@@ -3,17 +3,53 @@ import { CiCircleCheck } from "react-icons/ci";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { TbWorld } from "react-icons/tb";
+import useAuthStore from "../store/useAuthStore";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const ProfileUser = () => {
+  const { user } = useAuthStore();
+  const [imagen, setImagen] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const obtenerFoto = async () => {
+      try {
+        const token = user.token;
+        const response = await axios.get(
+          "http://localhost:8080/Api/datos-extras/foto",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            responseType: "blob",
+          }
+        );
+        const imagenUrl = URL.createObjectURL(response.data);
+        setImagen(imagenUrl);
+      } catch (err) {
+        setError("Error al obtener la foto");
+        console.error(err);
+      }
+    };
+
+    obtenerFoto();
+  }, []);
+
   return (
     <>
       <div className="container-fluid bg-black contentDashboard">
         <div className="row mb-3 p-5">
           <div className="col-12 col-md-4">
-            <img
-              src="../../public/profile.jpg"
-              className="w-fluid imageCurriculum"
-            />
+            {imagen ? (
+              <img
+                src={imagen}
+                className="w-fluid imageCurriculum"
+                alt="Foto del usuario"
+              />
+            ) : (
+              <p>Cargando imagen...</p>
+            )}
           </div>
           <div className="col-12 col-md-8 textoCurriculum px-4">
             <p className="text-white">Alejandro</p>
