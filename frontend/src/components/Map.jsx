@@ -1,69 +1,62 @@
-import { useState, useCallback, useEffect, useMemo } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-const center = [51.505, -0.09];
-const zoom = 13;
+export const Map = ({ setUbicacion }) => {
+  const [markerPosition, setMarkerPosition] = useState(null);
+  const [address, setAddress] = useState("");
 
-function DisplayPosition({ map }) {
-  const [position, setPosition] = useState(() => map.getCenter());
-
-  const onClick = useCallback(() => {
-    map.setView(center, zoom);
-  }, [map]);
-
-  const onMove = useCallback(() => {
-    setPosition(map.getCenter());
-  }, [map]);
-
-  useEffect(() => {
-    map.on("move", onMove);
-    return () => {
-      map.off("move", onMove);
-    };
-  }, [map, onMove]);
-
-  return (
-    <p>
-      latitude: {position.lat.toFixed(4)}, longitude: {position.lng.toFixed(4)}{" "}
-      <button onClick={onClick}>reset</button>
-    </p>
-  );
-}
-
-function ExternalStateExample() {
-  const [map, setMap] = useState(null);
-
-  const displayMap = useMemo(
-    () => (
-      <MapContainer
-        center={center}
-        zoom={zoom}
-        scrollWheelZoom={false}
-        ref={setMap}
-        style={{ height: "30vh", width: "100%" }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </MapContainer>
-    ),
-    []
-  );
+  const fetchAddress = async (lat, lng) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+      );
+      const data = await response.json();
+      if (data.display_name) {
+        setUbicacion(data.display_name);
+        setAddress(data.display_name);
+      } else {
+        setAddress("Dirección no encontrada");
+      }
+    } catch (error) {
+      console.error("Error obteniendo la dirección:", error);
+      setAddress("Error al obtener la dirección");
+    }
+  };
 
   return (
-    <div>
-      {map ? <DisplayPosition map={map} /> : null}
-      {displayMap}
-    </div>
+    <MapContainer
+      center={[10.23639, -67.964998]}
+      zoom={15}
+      style={{ height: "300px" }}
+    >
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <MapEventsHandler
+        setMarkerPosition={setMarkerPosition}
+        fetchAddress={fetchAddress}
+      />
+      {markerPosition && (
+        <Marker position={markerPosition}>
+          <Popup>{address || "Obteniendo dirección..."}</Popup>
+        </Marker>
+      )}
+    </MapContainer>
   );
-}
+};
 
-export const Map = () => {
-  return (
-    <div>
-      <ExternalStateExample />
-    </div>
-  );
+const MapEventsHandler = ({ setMarkerPosition, fetchAddress }) => {
+  useMapEvents({
+    click: async (e) => {
+      const { lat, lng } = e.latlng;
+      setMarkerPosition([lat, lng]);
+      fetchAddress(lat, lng);
+    },
+  });
+  return null;
 };

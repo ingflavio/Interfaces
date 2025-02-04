@@ -24,6 +24,7 @@ export const FormTable = () => {
     formacion: [],
     permisos: [],
     contrasena: "",
+    ubicacion: "",
   });
 
   const [idioma, setIdioma] = useState([{ id: 1, idioma: "" }]);
@@ -51,6 +52,8 @@ export const FormTable = () => {
       fechaFin: "",
     },
   ]);
+
+  const [ubicacion, setUbicacion] = useState("");
 
   const [photo, setPhoto] = useState("");
 
@@ -98,6 +101,7 @@ export const FormTable = () => {
         fechaIni: item.fechaIni,
         fechaFin: item.fechaFin,
       })),
+      ubicacion: ubicacion,
       permisos: ["READ"],
     };
 
@@ -586,7 +590,7 @@ export const FormTable = () => {
                 </div>
               </div>
               <span className="text-center">Ubicación</span>
-              <Map />
+              <Map setUbicacion={setUbicacion} />
               <div className="form-group my-3">
                 <div className="input-group">
                   <input
