@@ -76,7 +76,7 @@ public class ControllerFree {
         }
     }
     @PutMapping("/datos-extras")
-    public ResponseEntity<?> actualizarDatos(@RequestBody DatosDelUsuario datosDelUsuario, @RequestParam("foto") MultipartFile foto
+    public ResponseEntity<?> actualizarDatos(@RequestBody DatosDelUsuario datosDelUsuario//, @RequestParam("foto") MultipartFile foto
     ) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -104,8 +104,7 @@ public class ControllerFree {
             CrearDatos(usuarioActual, datosDelUsuario.getFormacion(), datosDelUsuario.getCompetencias(),
                     datosDelUsuario.getHabilidades(), datosDelUsuario.getExperenciasLaborales());
 
-            usuarioActual.setFoto(usuarioRepository.GuardarFoto(foto));
-            //usuarioActual.setTelefono("asdas");
+
 
             usuarioRepository1.save(usuarioActual);
 
@@ -138,7 +137,6 @@ public class ControllerFree {
 
             usuarioEntity.setFoto(usuarioRepository.GuardarFoto(foto));
             usuarioRepository1.save(usuarioEntity);
-
 
 
 
