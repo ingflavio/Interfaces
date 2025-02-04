@@ -16,7 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +50,7 @@ public class ControllerFree {
     @Autowired
     private CompetenciasRepository competenciasRepository;
 
+    private final Path rootLocation = Paths.get("src/main/resources/pictures");
 
     @PostMapping("/register")
     public ResponseEntity<?> CrearUsuario(@RequestBody LoginRequest request) {
@@ -71,7 +76,7 @@ public class ControllerFree {
         }
     }
     @PutMapping("/datos-extras")
-    public ResponseEntity<?> actualizarDatos(@RequestBody DatosDelUsuario datosDelUsuario//, @RequestParam("foto") MultipartFile foto
+    public ResponseEntity<?> actualizarDatos(@RequestBody DatosDelUsuario datosDelUsuario, @RequestParam("foto") MultipartFile foto
     ) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -99,8 +104,8 @@ public class ControllerFree {
             CrearDatos(usuarioActual, datosDelUsuario.getFormacion(), datosDelUsuario.getCompetencias(),
                     datosDelUsuario.getHabilidades(), datosDelUsuario.getExperenciasLaborales());
 
-           //usuarioActual.setFoto(usuarioRepository.GuardarFoto(foto));
-            usuarioActual.setTelefono("asdas");
+            usuarioActual.setFoto(usuarioRepository.GuardarFoto(foto));
+            //usuarioActual.setTelefono("asdas");
 
             usuarioRepository1.save(usuarioActual);
 
@@ -115,6 +120,80 @@ public class ControllerFree {
         }
     }
 
+
+
+    @PutMapping("/datos-extras/foto")
+    public ResponseEntity<?> ActualizarFoto( @RequestParam("foto") MultipartFile foto) {
+
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String authUsername = authentication.getName();
+            Optional<DatosDelUsuario> usuarioEntityOpt  = usuarioRepository1.findByNombreDeUsuario(authUsername);
+
+            if (!usuarioEntityOpt.isPresent()) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.UNAUTHORIZED);
+            }
+
+            DatosDelUsuario usuarioEntity = usuarioEntityOpt.get();
+
+            usuarioEntity.setFoto(usuarioRepository.GuardarFoto(foto));
+            usuarioRepository1.save(usuarioEntity);
+
+
+
+
+        } catch (IllegalArgumentException e) {
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al actualizar la foto: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok("Actualizado con exito");
+    }
+
+    @GetMapping("/datos-extras/foto")
+    public ResponseEntity<?> ObtenerFoto() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String authUsername = authentication.getName();
+            Optional<DatosDelUsuario> usuarioEntity = usuarioRepository1.findByNombreDeUsuario(authUsername);
+
+            if (!usuarioEntity.isPresent()) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.UNAUTHORIZED);
+            }
+
+            String nombreFoto = usuarioEntity.get().getFoto();
+            String extension = nombreFoto.substring(nombreFoto.lastIndexOf("."));
+            MediaType mediaType;
+
+            switch (extension.toLowerCase()) {
+                case ".jpg":
+                    mediaType = MediaType.IMAGE_JPEG;
+                    break;
+                case ".jpeg":
+                    mediaType = MediaType.IMAGE_JPEG;
+                    break;
+                case ".png":
+                    mediaType = MediaType.IMAGE_PNG;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Formato de archivo no admitido.");
+            }
+
+            Path path = Paths.get("src/main/resources/pictures/" + nombreFoto);
+            byte[] fotoBytes = Files.readAllBytes(path);
+
+            return ResponseEntity.ok().contentType(mediaType).body(fotoBytes);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al obtener la foto: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
     @GetMapping("/datos-extras")
     public ResponseEntity<?> VerDatos() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -123,12 +202,8 @@ public class ControllerFree {
         if (UsuarioEntity.isPresent()) {
             System.out.println(UsuarioEntity.get().getNombreDeUsuario() + "hola??");
             return ResponseEntity.ok(UsuarioEntity);
-
-
         }
-
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
     }
 
     @GetMapping("/Todos")
@@ -158,11 +233,6 @@ public class ControllerFree {
             experenciaLaboralEntity.setDatosDelUsuario(usuarioActual);
             experenciaLaboralRepository.save(experenciaLaboralEntity);
         }
-
-
-
     }
-
-
 
 }

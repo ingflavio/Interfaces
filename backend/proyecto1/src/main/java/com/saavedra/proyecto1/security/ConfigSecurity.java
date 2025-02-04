@@ -46,6 +46,8 @@ public class ConfigSecurity {
                     http.requestMatchers(HttpMethod.POST,"/Api/register").permitAll();
                     http.requestMatchers(HttpMethod.GET,"/Api/Todos").permitAll();
                     http.requestMatchers(HttpMethod.PUT,"/Api/datos-extras").authenticated();
+                    http.requestMatchers(HttpMethod.PUT,"/Api/datos-extras/foto").authenticated();
+                    http.requestMatchers(HttpMethod.GET,"/Api/datos-extras/foto").authenticated();
                     http.requestMatchers(HttpMethod.GET,"/Api/datos-extras").authenticated();
 
                     //http.anyRequest().denyAll();
