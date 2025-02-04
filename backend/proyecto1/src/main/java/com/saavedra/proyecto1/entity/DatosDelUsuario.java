@@ -17,7 +17,8 @@ import java.util.Set;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-@EqualsAndHashCode(exclude = {"competencias", "experenciasLaborales", "formacion", "habildades"})
+@EqualsAndHashCode(exclude = {"competencias", "experenciasLaborales", "formacion", "habilidades"})
+@ToString(exclude = {"competencias", "experenciasLaborales", "formacion", "habilidades"})
 public class DatosDelUsuario {
 
     @Id
