@@ -50,6 +50,9 @@ public class ControllerFree {
     @Autowired
     private CompetenciasRepository competenciasRepository;
 
+    @Autowired
+    private PaletaDeColoresRepository paletaDeColoresRepository;
+
     private final Path rootLocation = Paths.get("src/main/resources/pictures");
 
     @PostMapping("/register")
@@ -104,10 +107,18 @@ public class ControllerFree {
             CrearDatos(usuarioActual, datosDelUsuario.getFormacion(), datosDelUsuario.getCompetencias(),
                     datosDelUsuario.getHabilidades(), datosDelUsuario.getExperenciasLaborales());
 
+            // Verificar si el usuario ya tiene una paleta predeterminada
+            boolean tienePaletaPredeterminada = usuarioActual.getPaletaDeColores()
+                    .stream()
+                    .anyMatch(paleta -> "Predeterminado".equals(paleta.getNombrePaleta()));
 
+            // Si no tiene una paleta predeterminada, crear una nueva
+            if (!tienePaletaPredeterminada) {
+                PaletaDeColores paletaPredeterminada = CrearPaletaPreterminada(usuarioActual);
+                usuarioActual.getPaletaDeColores().add(paletaPredeterminada);
+            }
 
             usuarioRepository1.save(usuarioActual);
-
             return ResponseEntity.ok(usuarioActual);
 
         } catch (IllegalArgumentException e) {
@@ -118,8 +129,6 @@ public class ControllerFree {
             return new ResponseEntity<>("Error al actualizar los datos: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
-
 
     @PutMapping("/datos-extras/foto")
     public ResponseEntity<?> ActualizarFoto( @RequestParam("foto") MultipartFile foto) {
@@ -232,5 +241,17 @@ public class ControllerFree {
             experenciaLaboralRepository.save(experenciaLaboralEntity);
         }
     }
-
+    PaletaDeColores CrearPaletaPreterminada(DatosDelUsuario usuarioActual){
+        PaletaDeColores paletaDeColores= new PaletaDeColores();
+        paletaDeColores.setNombrePaleta("Predeterminado");
+        paletaDeColores.setPrimary_color("#ffffff");
+        paletaDeColores.setSecondary("#303334");
+        paletaDeColores.setButton("#59ab6e");
+        paletaDeColores.setAccent("#303334");
+        paletaDeColores.setParagraphSize(12);
+        paletaDeColores.setTitleSize(15);
+        paletaDeColores.setSubtitleSize(12);
+        paletaDeColores.setDatosDelUsuario(usuarioActual);
+        return paletaDeColoresRepository.save(paletaDeColores);
+    }
 }

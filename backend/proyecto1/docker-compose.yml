@@ -14,7 +14,7 @@ services:
       networks:
         - spring-network
       volumes:
-        - mysql-data:/var/lib/mysql
+        - mysql-data1:/var/lib/mysql
 
   spring-api-image:
     image: spring-saavedra  # Usa la imagen de tu aplicación Spring Boot
@@ -30,4 +30,4 @@ networks:
   spring-network:
 
 volumes:
-  mysql-data:
+  mysql-data1:

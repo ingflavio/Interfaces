@@ -17,8 +17,8 @@ import java.util.Set;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-@EqualsAndHashCode(exclude = {"competencias", "experenciasLaborales", "formacion", "habilidades"})
-@ToString(exclude = {"competencias", "experenciasLaborales", "formacion", "habilidades"})
+@EqualsAndHashCode(exclude = {"competencias", "experenciasLaborales", "formacion", "habilidades","paletaDeColores"})
+@ToString(exclude = {"competencias", "experenciasLaborales", "formacion", "habilidades","paletaDeColores"})
 public class DatosDelUsuario {
 
     @Id
@@ -44,9 +44,6 @@ public class DatosDelUsuario {
     private String SitioWeb;
     private String Direccion;
 
-
-
-
     @ElementCollection(targetClass = Idiomas.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "usuario_idiomas")
@@ -70,6 +67,11 @@ public class DatosDelUsuario {
     private List<HabilidadesEntities> habilidades;
 
     private String Foto;
+
+
+    @OneToMany(mappedBy = "datosDelUsuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<PaletaDeColores> paletaDeColores;
 
 
 }

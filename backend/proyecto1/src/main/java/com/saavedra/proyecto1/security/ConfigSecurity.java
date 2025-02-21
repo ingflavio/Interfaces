@@ -49,6 +49,9 @@ public class ConfigSecurity {
                     http.requestMatchers(HttpMethod.PUT,"/Api/datos-extras/foto").authenticated();
                     http.requestMatchers(HttpMethod.GET,"/Api/datos-extras/foto").authenticated();
                     http.requestMatchers(HttpMethod.GET,"/Api/datos-extras").authenticated();
+                    http.requestMatchers(HttpMethod.GET,"/Api/Colores/**").authenticated();
+                    http.requestMatchers(HttpMethod.POST,"/Api/Colores/**").authenticated();
+                    http.requestMatchers(HttpMethod.DELETE,"/Api/Colores/**").authenticated();
 
                     //http.anyRequest().denyAll();
                     http.anyRequest().permitAll();
