@@ -1,6 +1,7 @@
 import { FaHome, FaUser } from "react-icons/fa";
 import useAuthStore from "../store/useAuthStore";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosColorPalette, IoIosLogOut } from "react-icons/io";
+import { IoColorFillOutline } from "react-icons/io5";
 
 export const SideBar = ({ setMenuOption }) => {
   const { logout } = useAuthStore();
@@ -31,6 +32,16 @@ export const SideBar = ({ setMenuOption }) => {
           >
             <FaUser className="me-2" />
             Perfil
+          </a>
+        </li>
+        <li className="nav-item mb-2">
+          <a
+            href="#"
+            onClick={() => handleMenuChange("Colors")}
+            className="nav-link text-white"
+          >
+            <IoIosColorPalette className="me-2" />
+            Colores
           </a>
         </li>
         <li className="nav-item mb-2">

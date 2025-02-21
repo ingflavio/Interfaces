@@ -3,6 +3,7 @@ import { ProfileUser } from "../components/ProfileUser.jsx";
 import { FormTable } from "../components/FormTable.jsx";
 import "./styles/Dashboard.css";
 import { useEffect, useState } from "react";
+import { Colors } from "../components/Colors.jsx";
 
 export const Admin = () => {
   const [menuOption, setMenuOption] = useState("Home");
@@ -22,7 +23,13 @@ export const Admin = () => {
             <SideBar setMenuOption={setMenuOption} />
           </div>
           <div className="col-10 p-0">
-            {menuOption == "Home" ? <FormTable /> : <ProfileUser />}
+            {menuOption === "Home" ? (
+              <FormTable />
+            ) : menuOption === "Colors" ? (
+              <Colors />
+            ) : (
+              <ProfileUser />
+            )}
           </div>
         </div>
       </div>
