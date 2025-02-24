@@ -11,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -77,40 +79,42 @@ public class ControllerPaletasDeColores {
 
             NuevaPaleta.setDatosDelUsuario(usuarioEntity.get());
             paletaDeColoresRepository.save(NuevaPaleta);
-
-            return ResponseEntity.ok(NuevaPaleta);
+            return new ResponseEntity<>("Paleta Creada correctamente", HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>("Error interno del servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500
         }
     }
     @DeleteMapping("/Eliminar")
+    @Transactional // Asegura que la operación de eliminación se ejecute dentro de una transacción
     public ResponseEntity<?> BorrarPaleta(@RequestParam("Nombrepaleta") String Nombrepaleta) {
-
         try {
-
+            // Obtener el usuario autenticado
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String authUsername = authentication.getName();
 
+            // Buscar el usuario en la base de datos
             Optional<DatosDelUsuario> usuarioEntity = usuarioRepository1.findByNombreDeUsuario(authUsername);
             if (!usuarioEntity.isPresent()) {
                 return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND); // 404
             }
+
             Long idUsuario = usuarioEntity.get().getId();
 
-
+            // Verificar si la paleta es "Predeterminado"
             if (Nombrepaleta.equalsIgnoreCase("Predeterminado")) {
                 return new ResponseEntity<>("No se puede eliminar o editar la paleta Predeterminado", HttpStatus.BAD_REQUEST); // 400
             }
 
-
+            // Buscar la paleta por nombre y ID de usuario
             Optional<PaletaDeColores> paletaDeColores = paletaDeColoresRepository.findByPerfilColores(Nombrepaleta, idUsuario);
-            if (!paletaDeColores.isPresent() && Nombrepaleta == "Predeterminado") {
-                return new ResponseEntity<>("No se puede Borrar la paleta Predeterminado", HttpStatus.NOT_FOUND); // 404
+            if (!paletaDeColores.isPresent()) {
+                return new ResponseEntity<>("Paleta no encontrada", HttpStatus.NOT_FOUND); // 404
             }
 
-            paletaDeColoresRepository.delete(paletaDeColores.get());
-            return ResponseEntity.ok(paletaDeColores.get());
+            // Eliminar la paleta usando el método personalizado
+            paletaDeColoresRepository.eliminarPaletaPorId(paletaDeColores.get().getId());
+            return new ResponseEntity<>("Paleta '" + Nombrepaleta + "' eliminada correctamente", HttpStatus.OK); // 200
 
         } catch (Exception e) {
             return new ResponseEntity<>("Error interno del servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500
@@ -186,6 +190,39 @@ public class ControllerPaletasDeColores {
             return new ResponseEntity<>("Error interno del servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500
         }
     }
+
+
+    @GetMapping("/Nombres")
+    public ResponseEntity<?> obtenerNombresPaletasPorUsuarioId() {
+        try {
+            // Obtener el usuario autenticado
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String authUsername = authentication.getName();
+
+            // Buscar el usuario en la base de datos
+            Optional<DatosDelUsuario> usuarioEntity = usuarioRepository1.findByNombreDeUsuario(authUsername);
+            if (!usuarioEntity.isPresent()) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND); // 404
+            }
+
+            Long idUsuario = usuarioEntity.get().getId();
+            List<String> nombresPaletas = paletaDeColoresRepository.findNombresPaletasByUsuarioId(idUsuario);
+
+            // Verificar si la lista está vacía
+            if (nombresPaletas.isEmpty()) {
+                return new ResponseEntity<>("No se encontraron paletas para el usuario", HttpStatus.NOT_FOUND); // 404
+            }
+
+            // Devolver la lista de nombres de paletas
+            //return new ResponseEntity<>(new StandardResponse("Nombres de paletas obtenidos correctamente", 200, nombresPaletas), HttpStatus.OK);
+            return ResponseEntity.ok(nombresPaletas);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR); // 404
+
+        }
+    }
+
 
 
 }

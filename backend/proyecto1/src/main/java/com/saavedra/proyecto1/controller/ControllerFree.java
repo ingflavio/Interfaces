@@ -62,7 +62,9 @@ public class ControllerFree {
         if (usuarioExistente.isPresent()) {
             return ResponseEntity.badRequest().body("El usuario ya existe");
         }
+
         String resultado = usuarioRepository.Guardar(request);
+
         return ResponseEntity.ok(resultado);
     }
     @PostMapping("/login")

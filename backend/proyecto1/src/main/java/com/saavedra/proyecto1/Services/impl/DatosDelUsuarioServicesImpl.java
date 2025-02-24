@@ -5,7 +5,9 @@ import com.saavedra.proyecto1.controller.Dtos.IniciarSesionRequest;
 import com.saavedra.proyecto1.controller.Dtos.IniciarSesionResponse;
 import com.saavedra.proyecto1.controller.Dtos.LoginRequest;
 import com.saavedra.proyecto1.entity.DatosDelUsuario;
+import com.saavedra.proyecto1.entity.PaletaDeColores;
 import com.saavedra.proyecto1.entity.Permisos;
+import com.saavedra.proyecto1.repository.PaletaDeColoresRepository;
 import com.saavedra.proyecto1.repository.UsuarioRepository;
 import com.saavedra.proyecto1.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ public class DatosDelUsuarioServicesImpl implements DatosDelUsuarioServices, Use
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private PaletaDeColoresRepository paletaDeColoresRepository;
+
     @Override
     public Optional<DatosDelUsuario> findByNombreDeUsuario(String NombreDeUsuario) {
        return usuarioRepository.findByNombreDeUsuario(NombreDeUsuario);
@@ -52,12 +57,29 @@ public class DatosDelUsuarioServicesImpl implements DatosDelUsuarioServices, Use
 
     @Override
     public String Guardar(LoginRequest usuario) {
+
+
+
         DatosDelUsuario datosDelUsuario = DatosDelUsuario.builder()
                 .NombreDeUsuario(usuario.getNombreDeUsuario())
                 .Gmail(usuario.getGmail())
                 .Contrasena(passwordEncoder.encode(usuario.getContrasena()))
                 .build();
         usuarioRepository.save(datosDelUsuario);
+
+        PaletaDeColores paletaDeColores= new PaletaDeColores();
+        paletaDeColores.setNombrePaleta("Predeterminado");
+        paletaDeColores.setPrimary_color("#ffffff");
+        paletaDeColores.setSecondary("#303334");
+        paletaDeColores.setButton("#59ab6e");
+        paletaDeColores.setAccent("#303334");
+        paletaDeColores.setParagraphSize(12);
+        paletaDeColores.setTitleSize(15);
+        paletaDeColores.setSubtitleSize(12);
+        paletaDeColores.setDatosDelUsuario(datosDelUsuario);
+        paletaDeColores.setActiva(true);
+        paletaDeColoresRepository.save(paletaDeColores);
+
 
         return "Listo";
     }
@@ -152,6 +174,8 @@ public class DatosDelUsuarioServicesImpl implements DatosDelUsuarioServices, Use
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
     }
+
+
 }
 
 
