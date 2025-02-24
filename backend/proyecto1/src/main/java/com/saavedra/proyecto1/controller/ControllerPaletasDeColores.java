@@ -116,4 +116,76 @@ public class ControllerPaletasDeColores {
             return new ResponseEntity<>("Error interno del servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500
         }
     }
+
+    @PostMapping("/Activar")
+    public ResponseEntity<?> activarPaleta(@RequestParam("Nombrepaleta") String Nombrepaleta) {
+        try {
+            // Obtener el usuario autenticado
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String authUsername = authentication.getName();
+
+            // Buscar el usuario en la base de datos
+            Optional<DatosDelUsuario> usuarioEntity = usuarioRepository1.findByNombreDeUsuario(authUsername);
+            if (!usuarioEntity.isPresent()) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND); // 404
+            }
+
+            Long idUsuario = usuarioEntity.get().getId();
+
+            // Buscar la paleta activa actual del usuario
+            Optional<PaletaDeColores> paletaActivaActual = paletaDeColoresRepository.findByUsuarioIdAndActiva(idUsuario, true);
+            if (paletaActivaActual.isPresent()) {
+                // Desactivar la paleta activa actual
+                PaletaDeColores paletaDesactivar = paletaActivaActual.get();
+                paletaDesactivar.setActiva(false);
+                paletaDeColoresRepository.save(paletaDesactivar);
+            }
+
+            // Buscar la paleta que se desea activar
+            Optional<PaletaDeColores> paletaParaActivar = paletaDeColoresRepository.findByPerfilColores(Nombrepaleta, idUsuario);
+            if (!paletaParaActivar.isPresent()) {
+                return new ResponseEntity<>("Paleta no encontrada", HttpStatus.NOT_FOUND); // 404
+            }
+
+            // Activar la nueva paleta
+            PaletaDeColores paletaActivada = paletaParaActivar.get();
+            paletaActivada.setActiva(true);
+            paletaDeColoresRepository.save(paletaActivada);
+
+            return ResponseEntity.ok("Paleta '" + Nombrepaleta + "' activada correctamente");
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error interno del servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500
+        }
+    }
+
+    @GetMapping("/ObtenerActiva")
+    public ResponseEntity<?> obtenerPaletaActiva() {
+        try {
+            // Obtener el usuario autenticado
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String authUsername = authentication.getName();
+
+            // Buscar el usuario en la base de datos
+            Optional<DatosDelUsuario> usuarioEntity = usuarioRepository1.findByNombreDeUsuario(authUsername);
+            if (!usuarioEntity.isPresent()) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND); // 404
+            }
+
+            Long idUsuario = usuarioEntity.get().getId();
+            // Buscar la paleta activa del usuario
+            Optional<PaletaDeColores> paletaActiva = paletaDeColoresRepository.findByUsuarioIdAndActiva(idUsuario, true);
+            if (!paletaActiva.isPresent()) {
+                return new ResponseEntity<>("No hay paleta activa", HttpStatus.NOT_FOUND); // 404
+            }
+
+            // Retornar la paleta activa
+            return ResponseEntity.ok(paletaActiva.get());
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error interno del servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500
+        }
+    }
+
+
 }

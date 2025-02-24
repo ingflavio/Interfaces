@@ -27,6 +27,9 @@ public class PaletaDeColores {
     private Integer subtitleSize;
     private Integer paragraphSize;
 
+    @Column(name = "activa")
+    private boolean activa;
+
     @ManyToOne(targetEntity = DatosDelUsuario.class)
     @JoinColumn(name = "usuario_id")
     @JsonBackReference

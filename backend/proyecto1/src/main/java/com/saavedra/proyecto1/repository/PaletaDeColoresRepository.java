@@ -15,4 +15,10 @@ public interface PaletaDeColoresRepository extends CrudRepository<PaletaDeColore
     @Query("SELECT p FROM PaletaDeColores p WHERE p.NombrePaleta = :NombrePaleta AND p.datosDelUsuario.Id = :usuarioId")
     Optional<PaletaDeColores> findByPerfilColores(@Param("NombrePaleta") String NombrePaleta, @Param("usuarioId") Long usuarioId);
 
+
+    @Query("SELECT p FROM PaletaDeColores p WHERE p.datosDelUsuario.Id = :usuarioId AND p.activa = :activa")
+    Optional<PaletaDeColores> findByUsuarioIdAndActiva(@Param("usuarioId") Long usuarioId, @Param("activa") boolean activa);
 }
+
+
+

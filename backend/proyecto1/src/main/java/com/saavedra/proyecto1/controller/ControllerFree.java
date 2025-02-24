@@ -252,6 +252,7 @@ public class ControllerFree {
         paletaDeColores.setTitleSize(15);
         paletaDeColores.setSubtitleSize(12);
         paletaDeColores.setDatosDelUsuario(usuarioActual);
+        paletaDeColores.setActiva(true);
         return paletaDeColoresRepository.save(paletaDeColores);
     }
 }
