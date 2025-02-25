@@ -79,7 +79,7 @@ export const Login = () => {
               </div>
               <button
                 onClick={requestLogin}
-                className="btn btn-success btn-lg px-3"
+                className="btn bgbuttonPalette btn-lg px-3"
                 id="idBtn"
               >
                 Iniciar

@@ -2,7 +2,7 @@ export const Index = () => {
   return (
     <>
       <div
-        className="modal fade bg-white"
+        className="modal fade bgdivPrimary"
         id="templatemo_search"
         tabIndex="-1"
         role="dialog"
@@ -13,7 +13,7 @@ export const Index = () => {
           <div className="w-100 pt-1 mb-5 text-right">
             <button
               type="button"
-              className="btn-close"
+              className="btn-close bgbuttonPalette"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -194,7 +194,7 @@ export const Index = () => {
         </a>
       </div>
 
-      <section className="container py-5">
+      <section className="container py-5 bgdivPrimary">
         <div className="row text-center pt-3">
           <div className="col-lg-6 m-auto">
             <h1 className="h1">Categories of The Month</h1>
@@ -214,7 +214,7 @@ export const Index = () => {
             </a>
             <h5 className="text-center mt-3 mb-3">Watches</h5>
             <p className="text-center">
-              <a className="btn btn-success">Go Shop</a>
+              <a className="btn bgbuttonPalette">Go Shop</a>
             </p>
           </div>
           <div className="col-12 col-md-4 p-5 mt-3">
@@ -226,7 +226,7 @@ export const Index = () => {
             </a>
             <h2 className="h5 text-center mt-3 mb-3">Shoes</h2>
             <p className="text-center">
-              <a className="btn btn-success">Go Shop</a>
+              <a className="btn bgbuttonPalette">Go Shop</a>
             </p>
           </div>
           <div className="col-12 col-md-4 p-5 mt-3">
@@ -238,13 +238,13 @@ export const Index = () => {
             </a>
             <h2 className="h5 text-center mt-3 mb-3">Accessories</h2>
             <p className="text-center">
-              <a className="btn btn-success">Go Shop</a>
+              <a className="btn bgbuttonPalette">Go Shop</a>
             </p>
           </div>
         </div>
       </section>
 
-      <section className="bg-light">
+      <section className="bgdivPrimary">
         <div className="container py-5">
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">

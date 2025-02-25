@@ -2,7 +2,7 @@ export const About = () => {
   return (
     <>
       <div
-        className="modal fade bg-white"
+        className="modal fade bgdivPrimary"
         id="templatemo_search"
         tabIndex="-1"
         role="dialog"
@@ -13,7 +13,7 @@ export const About = () => {
           <div className="w-100 pt-1 mb-5 text-right">
             <button
               type="button"
-              className="btn-close"
+              className="btn-close bgbuttonPalette"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -38,7 +38,7 @@ export const About = () => {
         </div>
       </div>
 
-      <section className="bg-success py-5">
+      <section className="bgdivPrimary py-5">
         <div className="container">
           <div className="row align-items-center py-5">
             <div className="col-md-8 text-white">
@@ -104,7 +104,7 @@ export const About = () => {
           </div>
         </div>
       </section>
-      <section className="bg-light py-5">
+      <section className="bgdivPrimary py-5">
         <div className="container my-4">
           <div className="row text-center py-3">
             <div className="col-lg-6 m-auto">

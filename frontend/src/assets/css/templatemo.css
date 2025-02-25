@@ -28,12 +28,12 @@ Table of contents
 
 
 
-/* Typography */
+/* Typography
 body, ul, li, p, a, label, input, div {
   font-family: 'Roboto', sans-serif;
   font-size: 18px !important;
   font-weight: 300 !important;
-}
+} */
 .h1 {
   font-family: 'Roboto', sans-serif;
   font-size: 48px !important;

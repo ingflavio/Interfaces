@@ -2,7 +2,7 @@ export const Contact = () => {
   return (
     <>
       <div
-        className="modal fade bg-white"
+        className="modal fade bgdivPrimary"
         id="templatemo_search"
         tabIndex="-1"
         role="dialog"
@@ -13,7 +13,7 @@ export const Contact = () => {
           <div className="w-100 pt-1 mb-5 text-right">
             <button
               type="button"
-              className="btn-close"
+              className="btn-close bgbuttonPalette"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
@@ -42,7 +42,7 @@ export const Contact = () => {
         </div>
       </div>
 
-      <div className="container-fluid bg-light py-5">
+      <div className="container-fluid bgdivPrimary py-5">
         <div className="col-md-6 m-auto text-center">
           <h1 className="h1">Contact Us</h1>
           <p>
@@ -98,7 +98,7 @@ export const Contact = () => {
             </div>
             <div className="row">
               <div className="col text-end mt-2">
-                <button type="submit" className="btn btn-success btn-lg px-3">
+                <button type="submit" className="btn bgbuttonPalette btn-lg px-3">
                   Let’s Talk
                 </button>
               </div>

@@ -9,11 +9,52 @@ import { About } from "./views/About.jsx";
 import { Admin } from "./views/Admin.jsx";
 import { ProtectRoutes } from "./Routes/ProtectRoutes.jsx";
 import { NoProtectRoutes } from "./Routes/NoProtectRoutes.jsx";
+import usePaletteStore from "./store/useColorsStore.jsx";
 
 export const App = () => {
   const location = useLocation();
-
   useEffect(() => {}, [location]);
+
+  const {
+    primary_color,
+    secondary,
+    accent,
+    button,
+    titleSize,
+    subtitleSize,
+    paragraphSize,
+  } = usePaletteStore();
+
+  useEffect(() => {
+    // Actualizar las variables CSS globales
+    document.documentElement.style.setProperty(
+      "--primary-color",
+      primary_color
+    );
+    document.documentElement.style.setProperty("--secondary-color", secondary);
+    document.documentElement.style.setProperty("--accent-color", accent);
+    document.documentElement.style.setProperty("--button-color", button);
+    document.documentElement.style.setProperty(
+      "--title-size",
+      `${titleSize}px`
+    );
+    document.documentElement.style.setProperty(
+      "--subtitle-size",
+      `${subtitleSize}px`
+    );
+    document.documentElement.style.setProperty(
+      "--paragraph-size",
+      `${paragraphSize}px`
+    );
+  }, [
+    primary_color,
+    secondary,
+    accent,
+    button,
+    titleSize,
+    subtitleSize,
+    paragraphSize,
+  ]);
 
   return (
     <>

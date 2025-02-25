@@ -7,7 +7,7 @@ export const Navbar = () => {
   return (
     <>
       <nav
-        className="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block"
+        className="navbar navbar-expand-lg bgdivSecondary navbar-light d-none d-lg-block"
         id="templatemo_nav_top"
       >
         <div className="container text-light">
@@ -66,11 +66,11 @@ export const Navbar = () => {
         </div>
       </nav>
 
-      <nav className="navbar navbar-expand-lg navbar-light shadow">
+      <nav className="navbar navbar-expand-lg navbar-light shadow bgdivPrimary">
         <div className="container d-flex justify-content-between align-items-center">
           <Link
             to="/"
-            className="navbar-brand text-success logo h1 align-self-center"
+            className="navbar-brand text-white logo h1 align-self-center"
           >
             Zay
           </Link>
@@ -142,7 +142,7 @@ export const Navbar = () => {
                 )}
               </ul>
             </div>
-            <div className="navbar align-self-center d-flex">
+            <div className="navbar align-self-center d-flex text-white">
               <div className="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                 <div className="input-group">
                   <input
@@ -169,7 +169,7 @@ export const Navbar = () => {
                 href="#"
               >
                 <i className="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bgdivPrimary text-dark">
                   7
                 </span>
               </a>
@@ -178,7 +178,7 @@ export const Navbar = () => {
                 href="#"
               >
                 <i className="fa fa-fw fa-user text-dark mr-3"></i>
-                <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bgdivPrimary text-dark">
                   +99
                 </span>
               </a>

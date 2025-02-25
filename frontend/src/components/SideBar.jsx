@@ -11,7 +11,7 @@ export const SideBar = ({ setMenuOption }) => {
   };
 
   return (
-    <div className="d-flex flex-column vh-100 bg-dark text-white p-3 sidebarDashboard">
+    <div className="d-flex flex-column vh-100 bgdivSecondary text-white p-3 sidebarDashboard">
       <h2 className="text-center">Menu</h2>
       <ul className="nav flex-column">
         <li className="nav-item mb-2">

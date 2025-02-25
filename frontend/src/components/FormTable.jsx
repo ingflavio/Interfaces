@@ -154,10 +154,10 @@ export const FormTable = () => {
   };
 
   return (
-    <div className="container-fluid h-100 w-100 bg-black contentDashboard">
+    <div className="container-fluid h-100 w-100 bgdivSecondary contentDashboard">
       <div className="row">
         <div className="col-12 col-md-6">
-          <div className="container form-group bg-white mt-3 p-3 rounded-3 p-0">
+          <div className="container form-group bgdivPrimary mt-3 p-3 rounded-3 p-0">
             <h2 className="text-center">Registrar Datos</h2>
             <div className="row">
               <div className="col-12 col-md-6">
@@ -295,13 +295,13 @@ export const FormTable = () => {
                 <div className="submitButton">
                   <button
                     onClick={() => removeLastElement(setIdioma)}
-                    className="btn btn-danger text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     -
                   </button>
                   <button
                     onClick={() => addElement(setIdioma, "idioma")}
-                    className="btn btn-success text-end my-2"
+                    className="btn bgbuttonPalette text-end my-2"
                   >
                     +
                   </button>
@@ -359,13 +359,13 @@ export const FormTable = () => {
                 <div className="submitButton">
                   <button
                     onClick={() => removeLastElement(setCompetencia)}
-                    className="btn btn-danger text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     -
                   </button>
                   <button
                     onClick={() => addElement(setCompetencia, "competencia")}
-                    className="btn btn-success text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     +
                   </button>
@@ -427,13 +427,13 @@ export const FormTable = () => {
                 <div className="submitButton">
                   <button
                     onClick={() => removeLastElement(setHabilidad)}
-                    className="btn btn-danger text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     -
                   </button>
                   <button
                     onClick={() => addElement(setHabilidad, "habilidad")}
-                    className="btn btn-success text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     +
                   </button>
@@ -526,13 +526,13 @@ export const FormTable = () => {
                 <div className="submitButton">
                   <button
                     onClick={() => removeLastElement(setExperiencia)}
-                    className="btn btn-danger text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     -
                   </button>
                   <button
                     onClick={() => addElement(setExperiencia, "experiencia")}
-                    className="btn btn-success text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     +
                   </button>
@@ -610,13 +610,13 @@ export const FormTable = () => {
                 <div className="submitButton">
                   <button
                     onClick={() => removeLastElement(setFormacion)}
-                    className="btn btn-danger text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     -
                   </button>
                   <button
                     onClick={() => addElement(setFormacion, "formacion")}
-                    className="btn btn-success text-end m-2"
+                    className="btn bgbuttonPalette text-end m-2"
                   >
                     +
                   </button>
@@ -640,14 +640,14 @@ export const FormTable = () => {
             <div className="submitButton">
               <button
                 onClick={handleSubmit}
-                className="btn btn-primary text-end my-2"
+                className="btn bgbuttonPalette text-end my-2"
               >
                 Enviar
               </button>
             </div>
           </div>
         </div>
-        <div className="col-12 col-md-6 form-group bg-white mt-3 p-3 rounded-3">
+        <div className="col-12 col-md-6 form-group bgdivPrimary mt-3 p-3 rounded-3">
           <h4 className="text-center mt-2">Registrar de Acciones</h4>
           <table className="tableActions w-full">
             <thead>

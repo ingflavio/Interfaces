@@ -1,13 +1,3 @@
-.modalContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.modalIcons {
-  font-size: 40px;
-}
-
 @media print {
   body {
     width: 210mm;
@@ -23,4 +13,89 @@
   .row {
     page-break-inside: avoid; /* Evita que las filas se corten entre páginas */
   }
+}
+
+:root {
+  --primary-color: #fff; /* Valor por defecto */
+  --secondary-color: #212529; /* Valor por defecto */
+  --accent-color: #212529; /* Valor por defecto */
+  --button-color: #212529; /* Valor por defecto */
+  --title-size: 15px; /* Valor por defecto */
+  --subtitle-size: 12px; /* Valor por defecto */
+  --paragraph-size: 12px; /* Valor por defecto */
+}
+
+body {
+  background-color: var(--primary-color);
+}
+
+.bgdivPrimary {
+  background-color: var(--primary-color);
+}
+
+.form-group input {
+  color: var(--accent-color) !important;
+  background-color: var(--primary-color);
+}
+
+.bgdivSecondary {
+  background-color: var(--secondary-color);
+}
+
+.tableActions thead {
+  background-color: var(--secondary-color);
+  color: var(--primary-color) !important;
+}
+
+span,
+a,
+b,
+h1,
+h2,
+h3,
+h4,
+h5,
+label,
+li {
+  color: var(--accent-color);
+}
+
+h1,
+h2,
+h3 {
+  font-size: var(--title-size);
+}
+
+h4,
+h5 {
+  font-size: var(--subtitle-size);
+}
+
+span,
+p,
+b {
+  font-size: var(--paragraph-size);
+}
+
+.text-white {
+  color: var(--primary-color) !important;
+}
+
+#templatemo_main_nav a {
+  color: var(--accent-color) !important;
+}
+
+table {
+  color: var(--accent-color) !important;
+}
+
+select,
+textarea {
+  background-color: var(--button-color) !important;
+  color: var(--accent-color) !important;
+}
+
+.bgbuttonPalette {
+  background-color: var(--button-color) !important;
+  color: var(--primary-color) !important;
 }

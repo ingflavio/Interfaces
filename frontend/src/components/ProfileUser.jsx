@@ -94,7 +94,7 @@ export const ProfileUser = () => {
     <div>
       <div
         id="profileContent"
-        className="container-fluid bg-black contentDashboard"
+        className="container-fluid bgdivSecondary contentDashboard"
       >
         <div className="row mb-3 p-5">
           <div className="col-12 col-md-4">
@@ -155,9 +155,9 @@ export const ProfileUser = () => {
           </div>
         </div>
 
-        <div className="row bg-white px-5 py-2">
+        <div className="row bgdivPrimary px-5 py-2">
           <div className="col-12 col-md-8">
-            <div className="bg-black text-white text-center">
+            <div className="bgdivSecondary text-white text-center">
               <p>Experiencia Laboral</p>
             </div>
             {userData
@@ -186,7 +186,7 @@ export const ProfileUser = () => {
           <div className="col-12 col-md-4">
             <div className="row">
               <div className="col-6 col-md-12">
-                <div className="bg-black text-white text-center">
+                <div className="bgdivSecondary text-white text-center">
                   <p>Idiomas</p>
                 </div>
                 {userData
@@ -202,7 +202,7 @@ export const ProfileUser = () => {
                   : "No disponible"}
               </div>
               <div className="col-6 col-md-12 mt-2">
-                <div className="bg-black text-white text-center">
+                <div className="bgdivSecondary text-white text-center">
                   <p>Competencias</p>
                 </div>
                 {userData
@@ -228,9 +228,9 @@ export const ProfileUser = () => {
             </div>
           </div>
         </div>
-        <div className="row bg-white px-5 py-2">
+        <div className="row bgdivPrimary px-5 py-2">
           <div className="col-12 col-md-8">
-            <div className="bg-black text-white text-center">
+            <div className="bgdivSecondary text-white text-center">
               <p>Formacion Académica</p>
             </div>
             {userData
@@ -259,7 +259,7 @@ export const ProfileUser = () => {
               : "No disponible"}
           </div>
           <div className="col-12 col-md-4">
-            <div className="bg-black text-white text-center">
+            <div className="bgdivSecondary text-white text-center">
               <p>Habilidades</p>
             </div>
             {userData
@@ -275,8 +275,8 @@ export const ProfileUser = () => {
           </div>
         </div>
       </div>
-      <div className="bg-dark p-3">
-        <button onClick={descargarPDF} className="btn btn-primary mb-4">
+      <div className="bgdivSecondary p-3">
+        <button onClick={descargarPDF} className="btn bgbuttonPalette mb-4">
           Descargar PDF
         </button>
       </div>
