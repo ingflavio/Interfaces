@@ -29,7 +29,7 @@ export const About = () => {
               />
               <button
                 type="submit"
-                className="input-group-text bg-success text-light"
+                className="input-group-text bg-success text-white"
               >
                 <i className="fa fa-fw fa-search text-white"></i>
               </button>
@@ -123,7 +123,7 @@ export const About = () => {
                     role="button"
                     data-bs-slide="prev"
                   >
-                    <i className="text-light fas fa-chevron-left"></i>
+                    <i className="text-white fas fa-chevron-left"></i>
                   </a>
                 </div>
 
@@ -269,7 +269,7 @@ export const About = () => {
                     role="button"
                     data-bs-slide="next"
                   >
-                    <i className="text-light fas fa-chevron-right"></i>
+                    <i className="text-white fas fa-chevron-right"></i>
                   </a>
                 </div>
               </div>

@@ -33,7 +33,7 @@ export const Index = () => {
               />
               <button
                 type="submit"
-                className="input-group-text bg-success text-light"
+                className="input-group-text bg-success text-white"
               >
                 <i className="fa fa-fw fa-search text-white"></i>
               </button>

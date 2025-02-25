@@ -9,7 +9,7 @@ export const Footer = () => {
               <h2 className="h2 text-success border-bottom pb-3 border-light logo">
                 Zay Shop
               </h2>
-              <ul className="list-unstyled text-light footer-link-list">
+              <ul className="list-unstyled text-white footer-link-list">
                 <li>
                   <i className="fas fa-map-marker-alt fa-fw"></i>
                   123 Consectetur at ligula 10660
@@ -33,10 +33,10 @@ export const Footer = () => {
             </div>
 
             <div className="col-md-4 pt-5">
-              <h2 className="h2 text-light border-bottom pb-3 border-light">
+              <h2 className="h2 text-white border-bottom pb-3 border-light">
                 Products
               </h2>
-              <ul className="list-unstyled text-light footer-link-list">
+              <ul className="list-unstyled text-white footer-link-list">
                 <li>
                   <a className="text-decoration-none" href="#">
                     Luxury
@@ -76,10 +76,10 @@ export const Footer = () => {
             </div>
 
             <div className="col-md-4 pt-5">
-              <h2 className="h2 text-light border-bottom pb-3 border-light">
+              <h2 className="h2 text-white border-bottom pb-3 border-light">
                 Further Info
               </h2>
-              <ul className="list-unstyled text-light footer-link-list">
+              <ul className="list-unstyled text-white footer-link-list">
                 <li>
                   <a className="text-decoration-none" href="#">
                     Home
@@ -109,7 +109,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          <div className="row text-light mb-4">
+          <div className="row text-white mb-4">
             <div className="col-12 mb-3">
               <div className="w-100 my-3 border-top border-light"></div>
             </div>
@@ -117,7 +117,7 @@ export const Footer = () => {
               <ul className="list-inline text-left footer-icons">
                 <li className="list-inline-item border border-light rounded-circle text-center">
                   <a
-                    className="text-light text-decoration-none"
+                    className="text-white text-decoration-none"
                     target="_blank"
                     href="http://facebook.com/"
                   >
@@ -126,7 +126,7 @@ export const Footer = () => {
                 </li>
                 <li className="list-inline-item border border-light rounded-circle text-center">
                   <a
-                    className="text-light text-decoration-none"
+                    className="text-white text-decoration-none"
                     target="_blank"
                     href="https://www.instagram.com/"
                   >
@@ -135,7 +135,7 @@ export const Footer = () => {
                 </li>
                 <li className="list-inline-item border border-light rounded-circle text-center">
                   <a
-                    className="text-light text-decoration-none"
+                    className="text-white text-decoration-none"
                     target="_blank"
                     href="https://twitter.com/"
                   >
@@ -144,7 +144,7 @@ export const Footer = () => {
                 </li>
                 <li className="list-inline-item border border-light rounded-circle text-center">
                   <a
-                    className="text-light text-decoration-none"
+                    className="text-white text-decoration-none"
                     target="_blank"
                     href="https://www.linkedin.com/"
                   >
@@ -164,7 +164,7 @@ export const Footer = () => {
                   id="subscribeEmail"
                   placeholder="Email address"
                 />
-                <div className="input-group-text bgbuttonPalette text-light">
+                <div className="input-group-text bgbuttonPalette text-white">
                   Subscribe
                 </div>
               </div>
@@ -172,11 +172,11 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="w-100 bgdivSecondary py-3 footerCopyrights">
+        <div className="w-100 bgdivSecondary py-3 footerCopyrights text-white">
           <div className="container">
             <div className="row pt-2">
               <div className="col-12">
-                <p className="text-left text-light">
+                <p className="text-left text-white">
                   Copyright &copy; 2021 Company Name | Designed by{" "}
                   <a
                     rel="sponsored"

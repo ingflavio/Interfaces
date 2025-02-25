@@ -10,7 +10,7 @@ export const Shop = () => {
             <form action="" method="get" className="modal-content modal-body border-0 p-0">
                 <div className="input-group mb-2">
                     <input type="text" className="form-control" id="inputModalSearch" name="q" placeholder="Search ..."/>
-                    <button type="submit" className="input-group-text bg-success text-light">
+                    <button type="submit" className="input-group-text bg-success text-white">
                         <i className="fa fa-fw fa-search text-white"></i>
                     </button>
                 </div>
@@ -451,7 +451,7 @@ export const Shop = () => {
 
                         <div className="col-1 align-self-center">
                             <a className="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
-                                <i className="text-light fas fa-chevron-left"></i>
+                                <i className="text-white fas fa-chevron-left"></i>
                             </a>
                         </div>
 
@@ -521,7 +521,7 @@ export const Shop = () => {
 
                         <div className="col-1 align-self-center">
                             <a className="h1" href="#multi-item-example" role="button" data-bs-slide="next">
-                                <i className="text-light fas fa-chevron-right"></i>
+                                <i className="text-white fas fa-chevron-right"></i>
                             </a>
                         </div>
                     </div>

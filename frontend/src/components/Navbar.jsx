@@ -10,13 +10,13 @@ export const Navbar = () => {
         className="navbar navbar-expand-lg bgdivSecondary navbar-light d-none d-lg-block"
         id="templatemo_nav_top"
       >
-        <div className="container text-light">
+        <div className="container text-white">
           <div className="w-100 d-flex justify-content-between">
             <div>
               <i className="fa fa-envelope mx-2"></i>
               <Link
                 to="/"
-                className="navbar-sm-brand text-light text-decoration-none"
+                className="navbar-sm-brand text-white text-decoration-none"
                 href="mailto:info@company.com"
               >
                 info@company.com
@@ -24,7 +24,7 @@ export const Navbar = () => {
               <i className="fa fa-phone mx-2"></i>
               <Link
                 to="/"
-                className="navbar-sm-brand text-light text-decoration-none"
+                className="navbar-sm-brand text-white text-decoration-none"
                 href="tel:010-020-0340"
               >
                 010-020-0340
@@ -33,7 +33,7 @@ export const Navbar = () => {
             <div>
               <Link
                 to="/"
-                className="text-light"
+                className="text-white"
                 href="https://fb.com/templatemo"
                 target="_blank"
                 rel="sponsored"
@@ -41,21 +41,21 @@ export const Navbar = () => {
                 <i className="fab fa-facebook-f fa-sm fa-fw me-2"></i>
               </Link>
               <a
-                className="text-light"
+                className="text-white"
                 href="https://www.instagram.com/"
                 target="_blank"
               >
                 <i className="fab fa-instagram fa-sm fa-fw me-2"></i>
               </a>
               <a
-                className="text-light"
+                className="text-white"
                 href="https://twitter.com/"
                 target="_blank"
               >
                 <i className="fab fa-twitter fa-sm fa-fw me-2"></i>
               </a>
               <a
-                className="text-light"
+                className="text-white"
                 href="https://www.linkedin.com/"
                 target="_blank"
               >
