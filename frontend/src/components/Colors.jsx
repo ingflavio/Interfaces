@@ -207,7 +207,7 @@ export const Colors = () => {
               {paletas.map((name, index) => (
                 <button
                   onClick={() => handleActivarPaleta(name)} // Pasa una función, no el resultado
-                  className="btn mx-1 bgbutton"
+                  className="btn mx-1 bgbuttonPalette"
                   key={index}
                 >
                   {name}
@@ -322,20 +322,6 @@ export const Colors = () => {
               </div>
 
               {/* Input para tipografia */}
-              <div className="mb-3">
-                <label htmlFor="nombrePaleta" className="form-label">
-                  Nombre de la Paleta
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="nombrePaleta"
-                  value={formData.nombrePaleta}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Input para el nombre de la paleta */}
               <div className="mb-3">
                 <label htmlFor="nombrePaleta" className="form-label">
                   Nombre de la Paleta

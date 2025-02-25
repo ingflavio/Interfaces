@@ -74,7 +74,7 @@ h5 {
 span,
 p,
 b {
-  font-size: var(--paragraph-size);
+  font-size: var(--paragraph-size) !important;
 }
 
 .text-white {
