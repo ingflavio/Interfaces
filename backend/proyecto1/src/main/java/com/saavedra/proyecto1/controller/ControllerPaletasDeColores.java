@@ -112,6 +112,19 @@ public class ControllerPaletasDeColores {
                 return new ResponseEntity<>("Paleta no encontrada", HttpStatus.NOT_FOUND); // 404
             }
 
+            // Verificar si la paleta a eliminar es la activa
+            if (paletaDeColores.get().isActiva()) {
+                // Buscar la paleta predeterminada
+                Optional<PaletaDeColores> paletaPredeterminada = paletaDeColoresRepository.findByPerfilColores("Predeterminado", idUsuario);
+                if (paletaPredeterminada.isPresent()) {
+                    // Activar la paleta predeterminada
+                    paletaPredeterminada.get().setActiva(true);
+                    paletaDeColoresRepository.save(paletaPredeterminada.get());
+                } else {
+                    return new ResponseEntity<>("No se encontró la paleta predeterminada", HttpStatus.NOT_FOUND); // 404
+                }
+            }
+
             // Eliminar la paleta usando el método personalizado
             paletaDeColoresRepository.eliminarPaletaPorId(paletaDeColores.get().getId());
             return new ResponseEntity<>("Paleta '" + Nombrepaleta + "' eliminada correctamente", HttpStatus.OK); // 200
@@ -120,7 +133,6 @@ public class ControllerPaletasDeColores {
             return new ResponseEntity<>("Error interno del servidor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500
         }
     }
-
     @PostMapping("/Activar")
     public ResponseEntity<?> activarPaleta(@RequestParam("Nombrepaleta") String Nombrepaleta) {
         try {
