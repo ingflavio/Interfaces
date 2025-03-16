@@ -4,7 +4,6 @@ import { FormTable } from "../components/FormTable.jsx";
 import "./styles/Dashboard.css";
 import { useEffect, useState } from "react";
 import { Colors } from "../components/Colors.jsx";
-import { Tangram } from '../components/Tangram';
 
 export const Admin = () => {
   const [menuOption, setMenuOption] = useState("Home");
@@ -29,7 +28,7 @@ export const Admin = () => {
             ) : menuOption === "Colors" ? (
               <Colors />
             ) : menuOption === "Tangram" ? (
-              <Tangram />
+              <></>
             ) : (
               <ProfileUser />
             )}

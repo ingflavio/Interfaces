@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const figures = [
   {
@@ -30,8 +30,22 @@ const figures = [
   },
 ];
 
+const getRandomColor = () => {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
 export const Tangram = () => {
   const [index, setIndex] = useState(0);
+  const [colors, setColors] = useState({
+    triangle4: getRandomColor(),
+    triangle5: getRandomColor(),
+    parallelogram: getRandomColor(),
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,7 +57,20 @@ export const Tangram = () => {
   const positions = figures[index];
 
   return (
-    <div className="container-fluid h-100 w-100 bgdivSecondary contentDashboard d-flex justify-content-center align-items-center">
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#dadada",
+        zIndex: 100,
+      }}
+    >
       <div className="tangramDiv">
         <div
           id="square"
@@ -83,6 +110,9 @@ export const Tangram = () => {
           style={{
             transform: `translate(${positions.triangle4.x}px, ${positions.triangle4.y}px) rotate(${positions.triangle4.rotate}deg)`,
             transition: "transform 1s ease-in-out",
+            borderColor: `transparent transparent ${
+              colors.triangle4 || "#d63294"
+            } transparent`,
           }}
         ></div>
         <div
@@ -91,6 +121,9 @@ export const Tangram = () => {
           style={{
             transform: `translate(${positions.triangle5.x}px, ${positions.triangle5.y}px) rotate(${positions.triangle5.rotate}deg)`,
             transition: "transform 1s ease-in-out",
+            borderColor: `transparent ${
+              colors.triangle5 || "#69dcf0"
+            } transparent transparent`,
           }}
         ></div>
         <div
@@ -100,7 +133,7 @@ export const Tangram = () => {
             transform: `translate(${positions.parallelogram.x}px, ${positions.parallelogram.y}px) rotate(${positions.parallelogram.rotate}deg) skew(${positions.parallelogram.skew}deg)`,
             width: "130px",
             height: "55px",
-            background: "#e67e22",
+            background: colors.parallelogram || "#e67e22",
             transition: "transform 1s ease-in-out",
           }}
         ></div>

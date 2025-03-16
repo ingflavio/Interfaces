@@ -46,16 +46,6 @@ export const SideBar = ({ setMenuOption }) => {
           </a>
         </li>
         <li className="nav-item mb-2">
-          <a
-            href="#"
-            onClick={() => handleMenuChange("Tangram")}
-            className="nav-link text-white"
-          >
-            <TbBlocks className="me-2" />
-            Tangram
-          </a>
-        </li>
-        <li className="nav-item mb-2">
           <a href="#" onClick={() => logout()} className="nav-link text-white">
             <IoIosLogOut className="me-2" />
             Salir
