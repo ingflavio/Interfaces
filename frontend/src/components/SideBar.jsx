@@ -2,6 +2,7 @@ import { FaHome, FaUser } from "react-icons/fa";
 import useAuthStore from "../store/useAuthStore";
 import { IoIosColorPalette, IoIosLogOut } from "react-icons/io";
 import { IoColorFillOutline } from "react-icons/io5";
+import { TbBlocks } from 'react-icons/tb';
 
 export const SideBar = ({ setMenuOption }) => {
   const { logout } = useAuthStore();
@@ -42,6 +43,16 @@ export const SideBar = ({ setMenuOption }) => {
           >
             <IoIosColorPalette className="me-2" />
             Colores
+          </a>
+        </li>
+        <li className="nav-item mb-2">
+          <a
+            href="#"
+            onClick={() => handleMenuChange("Tangram")}
+            className="nav-link text-white"
+          >
+            <TbBlocks className="me-2" />
+            Tangram
           </a>
         </li>
         <li className="nav-item mb-2">

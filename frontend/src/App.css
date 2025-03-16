@@ -99,3 +99,64 @@ textarea {
   background-color: var(--button-color) !important;
   color: var(--primary-color) !important;
 }
+
+.draggable {
+  cursor: move;
+}
+#square {
+  width: 70px;
+  height: 70px;
+  background: #16a085;
+}
+
+.tangramDiv {
+  width: 500px;
+  height: 500px;
+  position: relative;
+}
+
+.block {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+}
+
+#triangle1 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 50px 50px 50px;
+  border-color: transparent transparent #f1c40f transparent;
+}
+
+#triangle2 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 120px 0 120px 120px;
+  border-color: transparent transparent transparent #e74c3c;
+}
+
+#triangle3 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 120px 120px 0 120px;
+  border-color: #007bff transparent transparent transparent;
+}
+
+#triangle4 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 120px 120px;
+  border-color: transparent transparent #d63294 transparent;
+}
+
+#triangle5 {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 50px 50px 0;
+  border-color: transparent #69dcf0 transparent transparent;
+}
