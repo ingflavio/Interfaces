@@ -57,20 +57,6 @@ export const Tangram = () => {
   const positions = figures[index];
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#dadada",
-        zIndex: 50,
-      }}
-    >
       <svg
         version="1.1"
         className="svg"
@@ -141,6 +127,5 @@ export const Tangram = () => {
           </g>
         </g>
       </svg>
-    </div>
   );
 };
