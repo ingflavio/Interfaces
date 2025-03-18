@@ -2,31 +2,31 @@ import { useEffect, useState } from "react";
 
 const figures = [
   {
-    square: { x: 250, y: 3, rotate: 0 },
-    triangle1: { x: 238, y: 395, rotate: 0 },
-    triangle2: { x: 130, y: 90, rotate: 135 },
-    triangle3: { x: 158, y: 60, rotate: 225 },
-    triangle4: { x: 160, y: 258, rotate: 180 },
-    triangle5: { x: 105, y: 335, rotate: 0 },
-    parallelogram: { x: 195, y: 323, rotate: 270, skew: 45 },
+    person1: "translate(0, 0) rotate(45, 295.59, 69.9)",
+    person2: "translate(-28, 58) rotate(225, 295.59, 69.9)",
+    person3: "translate(-85, 87) rotate(225, 295.59, 69.9)",
+    person4: "translate(-38, 8) rotate(-45, 295.59, 69.9)",
+    person5: "translate(-115, 95) rotate(-90, 295.59, 69.9)",
+    person6: "translate(142, 118) rotate(45, 295.59, 69.9)",
+    person7: "translate(33, 17) rotate(45, 295.59, 69.9)",
   },
   {
-    square: { x: 250, y: 0, rotate: 0 },
-    triangle1: { x: 390, y: 210, rotate: 225 },
-    triangle2: { x: 175, y: 120, rotate: 0 },
-    triangle3: { x: 255, y: 165, rotate: 225 },
-    triangle4: { x: 240, y: 270, rotate: 225 },
-    triangle5: { x: 125, y: 90, rotate: 135 },
-    parallelogram: { x: 215, y: 100, rotate: 45, skew: -45 },
+    person1: "translate(0, 0) rotate(45, 295.59, 69.9)",
+    person2: "translate(-60, 70) rotate(-90, 295.59, 69.9)",
+    person3: "translate(80, 35) rotate(45, 295.59, 69.9)",
+    person4: "scale(-1,1) translate(-540, -60)",
+    person5: "translate(-68, 30) rotate(-45, 295.59, 69.9)",
+    person6: "translate(-58, -19) rotate(-90, 295.59, 69.9)",
+    person7: "translate(-179, 68) rotate(-90, 295.59, 69.9)",
   },
   {
-    square: { x: 150, y: 3, rotate: 0 },
-    triangle1: { x: 35, y: 210, rotate: 225 },
-    triangle2: { x: 230, y: 130, rotate: 180 },
-    triangle3: { x: 150, y: 80, rotate: 0 },
-    triangle4: { x: 160, y: 315, rotate: 180 },
-    triangle5: { x: 150, y: 415, rotate: 225 },
-    parallelogram: { x: 130, y: 235, rotate: 45, skew: -45 },
+    person1: "translate(0, 0) rotate(50, 295.59, 69.9)",
+    person2: "translate(20, 0) rotate(0, 295.59, 69.9)",
+    person3: "translate(-32, 55) rotate(-90, 295.59, 69.9)",
+    person4: "scale(-1,1) translate(-535, -17)",
+    person5: "translate(-98, 112) rotate(270, 295.59, 69.9)",
+    person6: "translate(-151, -18) rotate(-90, 295.59, 69.9)",
+    person7: "translate(-135, 152) rotate(-90, 295.59, 69.9)",
   },
 ];
 
@@ -50,7 +50,7 @@ export const Tangram = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % figures.length);
-    }, 2000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -68,76 +68,79 @@ export const Tangram = () => {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#dadada",
-        zIndex: 100,
+        zIndex: 50,
       }}
     >
-      <div className="tangramDiv">
-        <div
-          id="square"
-          className="block"
-          style={{
-            transform: `translate(${positions.square.x}px, ${positions.square.y}px) rotate(${positions.square.rotate}deg)`,
-            transition: "transform 1s ease-in-out",
-          }}
-        ></div>
-        <div
-          id="triangle1"
-          className="block"
-          style={{
-            transform: `translate(${positions.triangle1.x}px, ${positions.triangle1.y}px) rotate(${positions.triangle1.rotate}deg)`,
-            transition: "transform 1s ease-in-out",
-          }}
-        ></div>
-        <div
-          id="triangle2"
-          className="block"
-          style={{
-            transform: `translate(${positions.triangle2.x}px, ${positions.triangle2.y}px) rotate(${positions.triangle2.rotate}deg)`,
-            transition: "transform 1s ease-in-out",
-          }}
-        ></div>
-        <div
-          id="triangle3"
-          className="block"
-          style={{
-            transform: `translate(${positions.triangle3.x}px, ${positions.triangle3.y}px) rotate(${positions.triangle3.rotate}deg)`,
-            transition: "transform 1s ease-in-out",
-          }}
-        ></div>
-        <div
-          id="triangle4"
-          className="block"
-          style={{
-            transform: `translate(${positions.triangle4.x}px, ${positions.triangle4.y}px) rotate(${positions.triangle4.rotate}deg)`,
-            transition: "transform 1s ease-in-out",
-            borderColor: `transparent transparent ${
-              colors.triangle4 || "#d63294"
-            } transparent`,
-          }}
-        ></div>
-        <div
-          id="triangle5"
-          className="block"
-          style={{
-            transform: `translate(${positions.triangle5.x}px, ${positions.triangle5.y}px) rotate(${positions.triangle5.rotate}deg)`,
-            transition: "transform 1s ease-in-out",
-            borderColor: `transparent ${
-              colors.triangle5 || "#69dcf0"
-            } transparent transparent`,
-          }}
-        ></div>
-        <div
-          id="parallelogram"
-          className="block"
-          style={{
-            transform: `translate(${positions.parallelogram.x}px, ${positions.parallelogram.y}px) rotate(${positions.parallelogram.rotate}deg) skew(${positions.parallelogram.skew}deg)`,
-            width: "130px",
-            height: "55px",
-            background: colors.parallelogram || "#e67e22",
-            transition: "transform 1s ease-in-out",
-          }}
-        ></div>
-      </div>
+      <svg
+        version="1.1"
+        className="svg"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMin meet"
+        viewBox="0 0 550 250"
+      >
+        <g id="wrap-person">
+          <g id="person">
+            <polygon
+              points="275.69,69.9 295.59,50 315.49,69.9 295.59,89.8"
+              className="draggable"
+              transform={positions.person1}
+              id="person1"
+              style={{ transition: "transform 0.3s ease-in-out" }}
+            />
+            <polygon
+              points="255.78,89.8 295.59,129.61 335.39,89.8"
+              className="draggable"
+              transform={positions.person2}
+              id="person2"
+              style={{ transition: "transform 0.3s ease-in-out" }}
+            />
+            <polygon
+              points="275.26,109.23 235.45,149.04 315.06,149.04"
+              className="draggable"
+              transform={positions.person3}
+              id="person3"
+              style={{ transition: "transform 0.3s ease-in-out" }}
+            />
+            <polygon
+              points="247.11,149.04 275.25,149.04 247.11,177.18 218.96,177.18"
+              className="draggable"
+              transform={positions.person4}
+              id="person4"
+              style={{ transition: "transform 0.3s ease-in-out" }}
+            />
+            <polygon
+              points="275.25,149.04 315.06,149.04 315.06,188.84"
+              style={{
+                fill: `${colors.triangle4 || "#d63294"}`,
+                transition: "transform 0.3s ease-in-out",
+              }}
+              className="draggable"
+              transform={positions.person5}
+              id="person5"
+            />
+            <polygon
+              points="200,167.94 200,196.09 228.15,167.94"
+              style={{
+                fill: `${colors.triangle5 || "#69dcf0"}`,
+                transition: "transform 0.3s ease-in-out",
+              }}
+              className="draggable"
+              transform={positions.person6}
+              id="person6"
+            />
+            <polygon
+              points="304.6,178.36 304.6,206.51 332.74,206.51"
+              style={{
+                fill: colors.parallelogram || "#e67e22",
+                transition: "transform 0.3s ease-in-out",
+              }}
+              className="draggable"
+              transform={positions.person7}
+              id="person7"
+            />
+          </g>
+        </g>
+      </svg>
     </div>
   );
 };

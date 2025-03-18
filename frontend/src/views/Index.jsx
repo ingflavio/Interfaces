@@ -8,7 +8,7 @@ export const Index = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowTangram(false);
-    }, 6000);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);
