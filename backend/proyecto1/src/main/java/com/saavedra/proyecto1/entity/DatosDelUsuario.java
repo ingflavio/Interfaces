@@ -2,6 +2,7 @@ package com.saavedra.proyecto1.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.saavedra.proyecto1.repository.VideoRepository;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -53,25 +54,26 @@ public class DatosDelUsuario {
     @OneToMany(mappedBy = "datosDelUsuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<ExperenciaLaboralEntity> experenciasLaborales;
-
     @OneToMany(mappedBy = "datosDelUsuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<CompetenciasEntity> competencias;
-
     @OneToMany(mappedBy = "datosDelUsuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<FormacionAcademicaEntity> formacion;
-
     @OneToMany(mappedBy = "datosDelUsuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<HabilidadesEntities> habilidades;
-
     private String Foto;
-
-
     @OneToMany(mappedBy = "datosDelUsuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<PaletaDeColores> paletaDeColores;
+
+    // En DatosDelUsuario.java agregar:
+    // Alternativa: Usar @Getter explícitamente en el campo
+    @ManyToOne
+    @Getter
+    @JoinColumn(name = "usuario_id")
+    private DatosDelUsuario usuario;
 
 
 }
