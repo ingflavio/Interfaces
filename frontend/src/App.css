@@ -176,3 +176,7 @@ textarea {
 #person4 {
   fill: var(--accent-color);
 }
+
+.bgdivTangram{
+  background-color:#4f4f4f
+}

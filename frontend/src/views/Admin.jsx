@@ -4,6 +4,7 @@ import { FormTable } from "../components/FormTable.jsx";
 import "./styles/Dashboard.css";
 import { useEffect, useState } from "react";
 import { Colors } from "../components/Colors.jsx";
+import { Tangram } from "../views/Tangram.jsx";
 
 export const Admin = () => {
   const [menuOption, setMenuOption] = useState("Home");
@@ -22,13 +23,14 @@ export const Admin = () => {
           <div className="col-2 p-0 bgdivSecondary">
             <SideBar setMenuOption={setMenuOption} />
           </div>
-          <div className="col-10 p-0">
+          <div className="col-10 p-0 bgdivTangram">
             {menuOption === "Home" ? (
               <FormTable />
             ) : menuOption === "Colors" ? (
               <Colors />
             ) : menuOption === "Tangram" ? (
-              <></>
+              <Tangram />
+
             ) : (
               <ProfileUser />
             )}
