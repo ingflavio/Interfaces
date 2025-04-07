@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -68,12 +69,9 @@ public class DatosDelUsuario {
     @JsonManagedReference
     private List<PaletaDeColores> paletaDeColores;
 
-    // En DatosDelUsuario.java agregar:
-    // Alternativa: Usar @Getter explícitamente en el campo
-    @ManyToOne
-    @Getter
-    @JoinColumn(name = "usuario_id")
-    private DatosDelUsuario usuario;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<FotosEntity> fotosCarrusel = new ArrayList<>();
 
 
 }
