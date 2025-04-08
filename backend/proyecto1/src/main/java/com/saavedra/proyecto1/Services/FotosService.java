@@ -5,6 +5,7 @@ import com.saavedra.proyecto1.entity.FotosEntity;
 import com.saavedra.proyecto1.repository.FotosRepository;
 import com.saavedra.proyecto1.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,13 +26,13 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+
 public class FotosService {
 
-
-
-        private final FotosRepository fotoRepository;
-        private final FilStoreUtil2 fileStorageUtil;
+        @Autowired
+        private  FotosRepository fotoRepository;
+        @Autowired
+        private  FilStoreUtil2 fileStorageUtil;
 
         private final String FOTO_UPLOAD_DIR = "src/main/resources/uploads/fotos/";
         private static final int ANCHO_MINIMO = 800;
@@ -54,13 +55,13 @@ public class FotosService {
         public List<FotosEntity> obtenerFotosPorUsuario(DatosDelUsuario usuario) {
             return fotoRepository.findByUsuario(usuario);
         }
-
+     @Transactional
         public void eliminarFoto(Long fotoId, DatosDelUsuario usuario) throws IOException {
             FotosEntity foto = fotoRepository.findByIdAndUsuario(fotoId, usuario)
                     .orElseThrow(() -> new EntityNotFoundException("Foto no encontrada"));
 
             fileStorageUtil.deleteFile(FOTO_UPLOAD_DIR + foto.getNombreArchivo());
-            fotoRepository.delete(foto);
+            fotoRepository.deleteByIdAndUsuario(fotoId,usuario);
         }
 
         public byte[] cargarFoto(String nombreArchivo) throws IOException {
