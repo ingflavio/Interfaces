@@ -3,6 +3,7 @@ import useAuthStore from "../store/useAuthStore";
 import { IoIosColorPalette, IoIosLogOut } from "react-icons/io";
 import { IoColorFillOutline } from "react-icons/io5";
 import { TbBlocks } from 'react-icons/tb';
+import { CiVideoOn } from 'react-icons/ci';
 
 export const SideBar = ({ setMenuOption }) => {
   const { logout } = useAuthStore();
@@ -53,6 +54,16 @@ export const SideBar = ({ setMenuOption }) => {
           >
             <IoIosColorPalette className="me-2" />
             Tangram
+          </a>
+        </li>
+        <li className="nav-item mb-2">
+          <a
+            href="#"
+            onClick={() => handleMenuChange("Multimedia")}
+            className="nav-link text-white"
+          >
+            <CiVideoOn className="me-2" />
+            Multimedia
           </a>
         </li>
         <li className="nav-item mb-2">

@@ -18,6 +18,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 
 const styles = {
   overlay: {
+    zIndex: 70,
     position: "fixed",
     top: 0,
     left: 0,
@@ -29,6 +30,7 @@ const styles = {
     alignItems: "center",
   },
   modal: {
+    zIndex: 80,
     backgroundColor: "#fff",
     padding: "20px",
     borderRadius: "8px",
@@ -37,6 +39,7 @@ const styles = {
     position: "relative",
   },
   closeButton: {
+    zIndex: 70,
     position: "absolute",
     top: "10px",
     right: "10px",

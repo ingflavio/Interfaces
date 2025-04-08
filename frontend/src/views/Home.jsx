@@ -1,6 +1,103 @@
+import { useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import useAuthStore from "../store/useAuthStore";
+import axios from "axios";
+import { Video } from "../components/video";
+import { Navigation } from "swiper/modules";
+import Modal from "../components/Modal";
+import "swiper/css";
+import "swiper/css/navigation";
+
 export const Home = () => {
+  const { user } = useAuthStore();
+  const [dataVideo, setDataVideo] = useState([]);
+  const [messageModal, setMessageModal] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const eliminarVideo = async (idVideo) => {
+    setMessageModal("Video eliminado correctamente");
+    openModal();
+    try {
+      const response = await axios.delete(
+        "http://localhost:8080/Api/Videos/Eliminar",
+        {
+          params: { idVideo: idVideo },
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error al eliminar el video:",
+        error.response?.data || error.message
+      );
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return; // Evitar SSR
+
+    const fetchAndTransformVideos = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/Api/Videos/ObtenerTodos",
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+            },
+          }
+        );
+
+        const videos = response.data;
+
+        const updatedVideos = await Promise.all(
+          videos.map(async (video) => {
+            const [videoRes, esRes, enRes] = await Promise.all([
+              axios.get(`http://localhost:8080${video.videoUrl}`, {
+                headers: { Authorization: `Bearer ${user?.token}` },
+                responseType: "blob",
+              }),
+              axios.get(`http://localhost:8080${video.subtituloEspanolUrl}`, {
+                headers: { Authorization: `Bearer ${user?.token}` },
+                responseType: "blob",
+              }),
+              axios.get(`http://localhost:8080${video.subtituloInglesUrl}`, {
+                headers: { Authorization: `Bearer ${user?.token}` },
+                responseType: "blob",
+              }),
+            ]);
+
+            return {
+              ...video,
+              videoUrl: window.URL.createObjectURL(videoRes.data),
+              subtituloEspanolUrl: window.URL.createObjectURL(esRes.data),
+              subtituloInglesUrl: window.URL.createObjectURL(enRes.data),
+            };
+          })
+        );
+
+        setDataVideo(updatedVideos);
+      } catch (err) {
+        console.error("Error al obtener o procesar los videos:", err);
+      }
+    };
+
+    fetchAndTransformVideos();
+  }, [isModalOpen]);
+
+  console.log("91", dataVideo);
+
   return (
     <div>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {messageModal}
+      </Modal>
       <div
         className="modal fade bgdivPrimary"
         id="templatemo_search"
@@ -195,6 +292,33 @@ export const Home = () => {
       </div>
 
       <section className="container py-5 bgdivPrimary">
+        <div className="reproductor mt-4">
+          <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+            {dataVideo && dataVideo.length > 0 ? (
+              dataVideo.map((video, index) => (
+                <SwiperSlide key={index}>
+                  <Video
+                    titulo={video.titulo}
+                    descripcion={video.descripcion}
+                    videoUrl={video.videoUrl}
+                    subsEsp={video.subtituloEspanolUrl}
+                    subsEng={video.subtituloInglesUrl}
+                  />
+                  <button
+                    className="btn bg-danger"
+                    onClick={() => eliminarVideo(video.id)}
+                  >
+                    Eliminar Video
+                  </button>
+                </SwiperSlide>
+              ))
+            ) : (
+              <SwiperSlide>
+                <p className="text-center text-black">Sin Videos</p>
+              </SwiperSlide>
+            )}
+          </Swiper>
+        </div>
         <div className="row text-center pt-3">
           <div className="col-lg-6 m-auto">
             <h1 className="h1">Categories of The Month</h1>

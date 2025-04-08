@@ -5,6 +5,7 @@ import "./styles/Dashboard.css";
 import { useEffect, useState } from "react";
 import { Colors } from "../components/Colors.jsx";
 import { Tangram } from "../views/Tangram.jsx";
+import { Multimedia } from '../views/Multimedia.jsx';
 
 export const Admin = () => {
   const [menuOption, setMenuOption] = useState("Home");
@@ -30,7 +31,8 @@ export const Admin = () => {
               <Colors />
             ) : menuOption === "Tangram" ? (
               <Tangram />
-
+            ) : menuOption === "Multimedia" ? (
+              <Multimedia />
             ) : (
               <ProfileUser />
             )}
