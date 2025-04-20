@@ -1,9 +1,9 @@
-import { FaHome, FaUser } from "react-icons/fa";
+import { FaHome, FaRegImages, FaUser } from "react-icons/fa";
 import useAuthStore from "../store/useAuthStore";
 import { IoIosColorPalette, IoIosLogOut } from "react-icons/io";
 import { IoColorFillOutline } from "react-icons/io5";
-import { TbBlocks } from 'react-icons/tb';
-import { CiVideoOn } from 'react-icons/ci';
+import { TbBlocks } from "react-icons/tb";
+import { CiVideoOn } from "react-icons/ci";
 
 export const SideBar = ({ setMenuOption }) => {
   const { logout } = useAuthStore();
@@ -59,11 +59,21 @@ export const SideBar = ({ setMenuOption }) => {
         <li className="nav-item mb-2">
           <a
             href="#"
-            onClick={() => handleMenuChange("Multimedia")}
+            onClick={() => handleMenuChange("Video")}
             className="nav-link text-white"
           >
             <CiVideoOn className="me-2" />
-            Multimedia
+            Agregar Video
+          </a>
+        </li>
+        <li className="nav-item mb-2">
+          <a
+            href="#"
+            onClick={() => handleMenuChange("Imagen")}
+            className="nav-link text-white"
+          >
+            <FaRegImages className="me-2" />
+            Agregar Imagen
           </a>
         </li>
         <li className="nav-item mb-2">

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useAuthStore from "../store/useAuthStore";
 import axios from "axios";
@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 export const Home = () => {
   const { user } = useAuthStore();
   const [dataVideo, setDataVideo] = useState([]);
+  const [dataImage, setDataImage] = useState([]);
   const [messageModal, setMessageModal] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
@@ -24,6 +25,29 @@ export const Home = () => {
         "http://localhost:8080/Api/Videos/Eliminar",
         {
           params: { idVideo: idVideo },
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error al eliminar el video:",
+        error.response?.data || error.message
+      );
+      throw error;
+    }
+  };
+
+  const eliminarImage = async (idImage) => {
+    setMessageModal("Imagen eliminada correctamente");
+    openModal();
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/Api/Fotos/Eliminar/${idImage}`,
+        {
           headers: {
             Authorization: `Bearer ${user?.token}`,
           },
@@ -88,10 +112,27 @@ export const Home = () => {
       }
     };
 
+    const fetchAndTransformImages = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/Api/Fotos/ObtenerTodos",
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+            },
+          }
+        );
+        setDataImage(response.data);
+      } catch (err) {
+        console.error("Error al obtener o procesar las imágenes:", err);
+      }
+    };
+
     fetchAndTransformVideos();
+    fetchAndTransformImages();
   }, [isModalOpen]);
 
-  console.log("91", dataVideo);
+  console.log(dataImage);
 
   return (
     <div>
@@ -296,7 +337,7 @@ export const Home = () => {
           <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
             {dataVideo && dataVideo.length > 0 ? (
               dataVideo.map((video, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide key={`video-${index}`}>
                   <Video
                     titulo={video.titulo}
                     descripcion={video.descripcion}
@@ -313,10 +354,34 @@ export const Home = () => {
                 </SwiperSlide>
               ))
             ) : (
-              <SwiperSlide>
-                <p className="text-center text-black">Sin Videos</p>
-              </SwiperSlide>
+              <p className="text-center text-black">Sin Videos</p>
             )}
+
+            {/* Agregar imágenes al slider */}
+            {dataImage &&
+              dataImage.length > 0 &&
+              dataImage.map((image, index) => (
+                <SwiperSlide key={`image-${index}`}>
+                  <div className="d-flex flex-column justify-content-center">
+                    <img
+                      src={`http://localhost:8080${image.url}`}
+                      alt={image.nombreArchivo}
+                      className="img-fluid"
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: "400px",
+                        objectFit: "contain",
+                      }} // Limitar tamaño
+                    />
+                    <button
+                      className="btn bg-danger mt-2"
+                      onClick={() => eliminarImage(image.id)}
+                    >
+                      Eliminar Imagen
+                    </button>
+                  </div>
+                </SwiperSlide>
+              ))}
           </Swiper>
         </div>
         <div className="row text-center pt-3">

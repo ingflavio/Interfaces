@@ -6,7 +6,7 @@ import Modal from "../components/Modal";
 import "swiper/css";
 import "swiper/css/navigation";
 
-export const Multimedia = () => {
+export const AddVideo = () => {
   const { user } = useAuthStore();
   const [dataVideo, setDataVideo] = useState([]);
   const [form, setForm] = useState({
